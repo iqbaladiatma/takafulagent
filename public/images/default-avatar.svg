@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Background -->
+  <rect width="200" height="200" fill="#E8F5F1"/>
+  
+  <!-- Circle background -->
+  <circle cx="100" cy="100" r="90" fill="#00A651" opacity="0.2"/>
+  
+  <!-- User icon -->
+  <g transform="translate(100, 100)">
+    <!-- Head -->
+    <circle cx="0" cy="-20" r="25" fill="#0066CC"/>
+    
+    <!-- Body -->
+    <path d="M -40 60 Q -40 20, 0 20 Q 40 20, 40 60 Z" fill="#0066CC"/>
+  </g>
+  
+  <!-- Shield icon (small) -->
+  <g transform="translate(150, 150)">
+    <path d="M 0 -10 L 8 -6 L 8 2 Q 8 8, 0 12 Q -8 8, -8 2 L -8 -6 Z" fill="#00A651"/>
+    <path d="M 0 -8 L 6 -5 L 6 2 Q 6 6, 0 9 Q -6 6, -6 2 L -6 -5 Z" fill="white"/>
+  </g>
+</svg>

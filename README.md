@@ -1,59 +1,294 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🛡️ Website Agen Asuransi Takaful
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Website landing page personal untuk agen asuransi syariah Takaful yang digunakan untuk meningkatkan nilai jual agen, memperkuat personal branding, dan memudahkan komunikasi dengan calon nasabah.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🎯 Tujuan Project
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Website ini adalah **landing page personal** untuk agen asuransi syariah Takaful yang digunakan untuk:
+- ✅ Meningkatkan nilai jual agen
+- ✅ Memperkuat personal branding
+- ✅ Memudahkan komunikasi dengan calon nasabah
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Website dibuat **1 PROTOTIPE** terlebih dahulu, nanti akan diduplikasi untuk **100 agen**.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## ✨ Fitur Utama
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. Landing Page Agen (Frontend)
+Setiap agen memiliki halaman: `/agen/{kode_agen}`
 
-## Laravel Sponsors
+Menampilkan:
+- ✅ Foto agen
+- ✅ Nama lengkap
+- ✅ Kode agen
+- ✅ Role / posisi
+- ✅ Deskripsi singkat
+- ✅ Pencapaian / pengalaman (opsional)
+- ✅ Tombol WhatsApp Chat (langsung ke nomor agen)
+- ✅ Warna UI biru–hijau seperti brand Takaful
+- ✅ Responsif & modern
+- ✅ Link produk diarahkan ke website resmi Takaful
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 2. Admin Panel (Backend)
+Menggunakan **Filament 3.2**
 
-### Premium Partners
+Admin dapat:
+- ✅ Tambah agen
+- ✅ Edit agen
+- ✅ Hapus agen
+- ✅ Upload foto
+- ✅ Generate otomatis link WA
+- ✅ Semua data tersimpan di database
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+**Penting**: Agen tidak boleh login & tidak boleh edit sendiri.
 
-## Contributing
+### 3. Konten Dikelola Tim Admin
+- ✅ Hanya admin panel yang boleh input profil agen
+- ✅ Standar bahasa mengikuti perusahaan
+- ✅ Tidak ada fitur edit mandiri oleh agen
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## 🎨 Desain UI
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Warna Brand Takaful
+- **Biru Takaful**: `#0066CC`
+- **Hijau Takaful**: `#00A651`
+- **Light Background**: `#E8F5F1`
 
-## Security Vulnerabilities
+### Fitur Desain
+- ✅ Typography modern
+- ✅ Responsif HP & Laptop
+- ✅ Tampilan profesional & clean
+- ✅ Komponen UI simple: card, avatar, tombol WA, section profile
+- ✅ Menggunakan Tailwind CSS
+- ✅ Hero section minimalis
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 🚀 Quick Start
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 1. Install Filament
+```bash
+composer require filament/filament:"^3.2" -W
+php artisan filament:install --panels
+```
+
+### 2. Jalankan Migration
+```bash
+php artisan migrate
+```
+
+### 3. Jalankan Seeder
+```bash
+php artisan db:seed
+```
+
+Ini akan membuat:
+- Admin user (email: `admin@takaful.com`, password: `admin123`)
+- 2 sample agen untuk testing
+
+### 4. Buat Storage Link
+```bash
+php artisan storage:link
+```
+
+### 5. Jalankan Server
+```bash
+php artisan serve
+```
+
+---
+
+## 🔐 Login Admin
+
+**URL**: `http://localhost:8000/admin`
+
+**Kredensial Default**:
+- Email: `admin@takaful.com`
+- Password: `admin123`
+
+⚠️ **PENTING**: Ganti password setelah login pertama kali!
+
+---
+
+## 📱 Akses Halaman Agen
+
+Format URL: `http://localhost:8000/agen/{kode_agen}`
+
+**Contoh**:
+- `http://localhost:8000/agen/TKF001`
+- `http://localhost:8000/agen/TKF002`
+
+---
+
+## 📂 Struktur Database
+
+### Table: agens
+| Field | Type | Keterangan |
+|-------|------|------------|
+| id | bigint | Primary key |
+| nama | string | Nama lengkap agen |
+| kode_agen | string | Kode unik agen (unique) |
+| telepon | string | Nomor telepon |
+| wa_link | string | Link WhatsApp (auto-generate) |
+| foto | string | Path foto profil |
+| deskripsi | text | Deskripsi singkat |
+| role | string | Role/posisi |
+| pencapaian | text | Pencapaian/pengalaman (opsional) |
+| created_at | timestamp | Waktu dibuat |
+| updated_at | timestamp | Waktu diupdate |
+
+---
+
+## 🛠️ Tech Stack
+
+- **Backend**: Laravel 12
+- **Admin Panel**: Filament 3.2
+- **Frontend**: Blade + Tailwind CSS
+- **Database**: MySQL
+- **Icons**: Font Awesome 6
+
+---
+
+## 📖 Dokumentasi Lengkap
+
+- 📄 [PANDUAN_INSTALASI.md](PANDUAN_INSTALASI.md) - Panduan instalasi lengkap
+- 📄 [ADMIN_CREDENTIALS.md](ADMIN_CREDENTIALS.md) - Kredensial admin & keamanan
+- 📄 [UI_PREVIEW.md](UI_PREVIEW.md) - Preview desain UI
+- 📄 [STRUKTUR_PROJECT.md](STRUKTUR_PROJECT.md) - Struktur file lengkap
+- 📄 [INSTALL_FILAMENT.md](INSTALL_FILAMENT.md) - Command install Filament
+
+---
+
+## 🔒 Keamanan
+
+- ✅ Hanya admin yang bisa login ke panel
+- ✅ Agen TIDAK bisa login
+- ✅ Agen TIDAK bisa edit profil sendiri
+- ✅ Semua data dikelola oleh tim admin
+- ⚠️ Ganti password default sebelum production!
+
+---
+
+## 🎯 Fitur Admin Panel
+
+### Form Input Agen
+- Nama lengkap
+- Kode agen (unique, validation)
+- Role/posisi
+- Nomor telepon (auto-generate WA link)
+- Upload foto (dengan image editor, rasio 1:1)
+- Deskripsi singkat
+- Pencapaian/pengalaman
+
+### Table List Agen
+- Foto circular
+- Nama
+- Kode agen (badge hijau)
+- Role
+- Telepon
+- Tanggal dibuat
+
+### Actions
+- 👁️ Lihat Halaman (preview frontend)
+- ✏️ Edit
+- 🗑️ Delete
+
+---
+
+## 📱 Preview UI Frontend
+
+### Hero Section
+- Background gradient biru → hijau
+- Card putih dengan shadow modern
+- Header gradient di atas card
+
+### Foto Profil
+- Circular avatar 160x160px
+- Border putih 8px
+- Badge icon shield (simbol proteksi)
+- Default avatar jika belum upload
+
+### Informasi Agen
+- Nama lengkap (heading besar)
+- Role/posisi
+- Kode agen dengan badge hijau
+
+### Section Deskripsi
+- Background abu-abu lembut
+- Icon user circle
+- Typography yang mudah dibaca
+
+### Section Pencapaian
+- Background gradient light
+- Border hijau di kiri
+- Icon trophy
+
+### Kontak Info
+- 2 kolom cards (responsive)
+- Icon telepon & WhatsApp
+- Background abu-abu dengan rounded
+
+### Tombol WhatsApp
+- Gradient hijau
+- Icon WhatsApp
+- Hover effect (scale & shadow)
+- Text ajakan konsultasi gratis
+
+### Link Website Resmi
+- Link ke takaful.co.id
+- Hover effect smooth
+
+---
+
+## 🔄 Duplikasi untuk 100 Agen
+
+Setelah prototipe selesai, untuk duplikasi:
+
+1. Export database dari prototipe
+2. Clone project untuk setiap agen
+3. Import data agen yang sesuai
+4. Update .env untuk setiap instance
+5. Deploy ke hosting masing-masing
+
+Atau gunakan **multi-tenancy** untuk satu codebase, banyak agen.
+
+---
+
+## 🆘 Troubleshooting
+
+### Error: Class 'Filament\...' not found
+```bash
+composer dump-autoload
+php artisan optimize:clear
+```
+
+### Foto tidak muncul
+```bash
+php artisan storage:link
+```
+
+### Migration error
+```bash
+php artisan migrate:fresh --seed
+```
+
+---
+
+## 📞 Support
+
+Jika ada pertanyaan, hubungi tim development.
+
+---
+
+## 📝 License
+
+Proprietary - Takaful Indonesia
+
+---
+
+**Dibuat dengan ❤️ untuk Agen Takaful Indonesia** 🛡️
