@@ -18,6 +18,12 @@
                     <x-nav-link :href="route('home')">
                         <i class="fas fa-home mr-2"></i>{{ __('Beranda') }}
                     </x-nav-link>
+                    
+                    @if(Auth::user()->isAdmin())
+                        <x-nav-link :href="url('/admin')" class="bg-gradient-to-r from-blue-600 to-green-600 text-white hover:from-blue-700 hover:to-green-700">
+                            <i class="fas fa-shield-halved mr-2"></i>{{ __('Panel Admin') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -37,8 +43,19 @@
                     </x-slot>
 
                     <x-slot name="content">
+                        <!-- Admin Badge -->
+                        @if(Auth::user()->isAdmin())
+                            <div class="px-4 py-2 bg-gradient-to-r from-blue-600 to-green-600 text-white text-xs font-bold">
+                                <i class="fas fa-crown mr-1"></i>ADMINISTRATOR
+                            </div>
+                            <x-dropdown-link :href="url('/admin')">
+                                <i class="fas fa-shield-halved mr-2"></i>{{ __('Panel Admin') }}
+                            </x-dropdown-link>
+                            <div class="border-t border-gray-100"></div>
+                        @endif
+
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            <i class="fas fa-user mr-2"></i>{{ __('Profile') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -48,7 +65,7 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                <i class="fas fa-sign-out-alt mr-2"></i>{{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -71,8 +88,17 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+                <i class="fas fa-th-large mr-2"></i>{{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('home')">
+                <i class="fas fa-home mr-2"></i>{{ __('Beranda') }}
+            </x-responsive-nav-link>
+            
+            @if(Auth::user()->isAdmin())
+                <x-responsive-nav-link :href="url('/admin')" class="bg-gradient-to-r from-blue-600 to-green-600 text-white">
+                    <i class="fas fa-shield-halved mr-2"></i>{{ __('Panel Admin') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
