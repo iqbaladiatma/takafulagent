@@ -23,7 +23,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-gradient-to-br from-takaful-blue to-takaful-green min-h-screen">
-    
+
+    <!-- Tombol Kembali -->
+    <div class="absolute top-6 left-6 z-50">
+        <a href="{{ route('home') }}"
+        class="bg-white/90 backdrop-blur-md text-gray-700 px-4 py-2 rounded-full shadow-lg 
+                hover:bg-white transition flex items-center gap-2">
+            <i class="fas fa-arrow-left"></i>
+            Kembali
+        </a>
+    </div>
+
     <!-- Hero Section -->
     <div class="container mx-auto px-4 py-12">
         <div class="max-w-4xl mx-auto">

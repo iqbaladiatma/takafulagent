@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Takaful Indonesia - Asuransi Syariah Terpercaya</title>
+    <title>Takaful Keluarga - Asuransi Syariah Terpercaya</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -11,8 +11,8 @@
                 extend: {
                     colors: {
                         takaful: {
-                            blue: '#0066CC',
-                            green: '#00A651',
+                            blue: '#1D76BB',
+                            green: '#8BC53F',
                             light: '#E8F5F1',
                             darkBlue: '#004A99',
                             darkGreen: '#008542',
