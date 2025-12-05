@@ -17,11 +17,15 @@ class AgenResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
-    protected static ?string $navigationLabel = 'Agen Takaful';
+    protected static ?string $navigationLabel = 'Kelola Agen';
 
     protected static ?string $modelLabel = 'Agen';
 
     protected static ?string $pluralModelLabel = 'Agen';
+
+    protected static ?string $navigationGroup = 'Manajemen Agen';
+
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
@@ -108,50 +112,93 @@ class AgenResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('foto')
                     ->circular()
-                    ->defaultImageUrl(asset('images/default-avatar.png'))
+                    ->size(60)
+                    ->defaultImageUrl(fn($record) => 'https://ui-avatars.com/api/?name=' . urlencode($record->nama) . '&size=200&background=3b82f6&color=fff')
                     ->label('Foto'),
 
                 Tables\Columns\TextColumn::make('nama')
                     ->searchable()
                     ->sortable()
-                    ->label('Nama'),
+                    ->weight('bold')
+                    ->label('Nama Lengkap')
+                    ->description(fn (Agen $record): string => $record->role),
 
                 Tables\Columns\TextColumn::make('kode_agen')
                     ->searchable()
                     ->sortable()
                     ->badge()
                     ->color('success')
+                    ->icon('heroicon-o-identification')
                     ->label('Kode Agen'),
-
-                Tables\Columns\TextColumn::make('role')
-                    ->searchable()
-                    ->label('Role'),
 
                 Tables\Columns\TextColumn::make('telepon')
                     ->searchable()
+                    ->icon('heroicon-o-phone')
+                    ->copyable()
+                    ->copyMessage('Nomor telepon disalin!')
                     ->label('Telepon'),
 
+                Tables\Columns\TextColumn::make('deskripsi')
+                    ->limit(50)
+                    ->tooltip(fn (Agen $record): ?string => $record->deskripsi)
+                    ->label('Deskripsi')
+                    ->toggleable(),
+
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime('d M Y')
+                    ->dateTime('d M Y, H:i')
                     ->sortable()
-                    ->label('Dibuat'),
+                    ->label('Dibuat')
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
-                //
+                Tables\Filters\Filter::make('has_photo')
+                    ->label('Dengan Foto')
+                    ->query(fn ($query) => $query->whereNotNull('foto')),
+                Tables\Filters\Filter::make('no_photo')
+                    ->label('Tanpa Foto')
+                    ->query(fn ($query) => $query->whereNull('foto')),
+                Tables\Filters\Filter::make('created_this_month')
+                    ->label('Bulan Ini')
+                    ->query(fn ($query) => $query->whereMonth('created_at', now()->month)),
             ])
+            ->filtersLayout(Tables\Enums\FiltersLayout::AboveContent)
             ->actions([
-                Tables\Actions\Action::make('view')
-                    ->label('Lihat Halaman')
-                    ->icon('heroicon-o-eye')
-                    ->url(fn (Agen $record): string => route('agen.show', $record->kode_agen))
-                    ->openUrlInNewTab(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\Action::make('view')
+                        ->label('Lihat Halaman')
+                        ->icon('heroicon-o-eye')
+                        ->color('info')
+                        ->url(fn (Agen $record): string => route('agen.show', $record->kode_agen))
+                        ->openUrlInNewTab(),
+                    Tables\Actions\Action::make('whatsapp')
+                        ->label('Chat WhatsApp')
+                        ->icon('heroicon-o-chat-bubble-left-right')
+                        ->color('success')
+                        ->url(fn (Agen $record): string => $record->wa_link)
+                        ->openUrlInNewTab(),
+                    Tables\Actions\EditAction::make()
+                        ->color('warning'),
+                    Tables\Actions\DeleteAction::make(),
+                ])
+                ->label('Aksi')
+                ->icon('heroicon-m-ellipsis-vertical')
+                ->size('sm')
+                ->color('primary')
+                ->button(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ])
+            ->emptyStateHeading('Belum ada agen')
+            ->emptyStateDescription('Mulai dengan menambahkan agen pertama Anda.')
+            ->emptyStateIcon('heroicon-o-user-group')
+            ->emptyStateActions([
+                Tables\Actions\CreateAction::make()
+                    ->label('Tambah Agen Pertama')
+                    ->icon('heroicon-o-plus'),
             ]);
     }
 

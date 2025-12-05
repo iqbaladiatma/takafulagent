@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class RedirectIfAuthenticated
@@ -18,18 +20,16 @@ class RedirectIfAuthenticated
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
-            if (auth()->guard($guard)->check()) {
-                $user = auth()->guard($guard)->user();
-                
-                // Redirect berdasarkan role
-                if ($user->role === 'admin') {
+            if (Auth::guard($guard)->check()) {
+                // Redirect admin to admin panel, user to dashboard
+                if (Auth::user()->isAdmin()) {
                     return redirect('/admin');
                 }
-                
                 return redirect('/dashboard');
             }
         }
 
         return $next($request);
+    }
     }
 }
