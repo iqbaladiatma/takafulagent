@@ -125,12 +125,20 @@
                                     <div class="bg-gradient-to-r from-blue-600 to-green-600 h-24 relative">
                                         <div class="absolute -bottom-12 left-1/2 transform -translate-x-1/2">
                                             <div class="relative">
-                                                <img 
-                                                    src="{{ $agen->foto ? asset('storage/' . $agen->foto) : asset('images/default-avatar.svg') }}" 
-                                                    alt="{{ $agen->nama }}"
-                                                    class="w-24 h-24 rounded-full border-4 border-white shadow-lg object-cover bg-white"
-                                                    onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($agen->nama) }}&size=200&background=3b82f6&color=fff'"
-                                                >
+                                                @if($agen->foto)
+                                                    <img 
+                                                        src="{{ asset('storage/' . $agen->foto) }}" 
+                                                        alt="{{ $agen->nama }}"
+                                                        class="w-24 h-24 rounded-full border-4 border-white shadow-lg object-cover bg-white"
+                                                        onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($agen->nama) }}&size=200&background=3b82f6&color=fff&bold=true'"
+                                                    >
+                                                @else
+                                                    <img 
+                                                        src="https://ui-avatars.com/api/?name={{ urlencode($agen->nama) }}&size=200&background=3b82f6&color=fff&bold=true" 
+                                                        alt="{{ $agen->nama }}"
+                                                        class="w-24 h-24 rounded-full border-4 border-white shadow-lg object-cover bg-white"
+                                                    >
+                                                @endif
                                                 <div class="absolute bottom-0 right-0 bg-green-500 w-6 h-6 rounded-full border-2 border-white"></div>
                                             </div>
                                         </div>
