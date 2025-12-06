@@ -66,7 +66,7 @@ class AdminPanelProvider extends PanelProvider
             ->font('Poppins')
             ->maxContentWidth('full')
             ->sidebarCollapsibleOnDesktop()
-            ->viteTheme('resources/css/filament/admin/theme.css')
+            // ->viteTheme('resources/css/filament/admin/theme.css')
             ->navigationGroups([
                 'Manajemen Agen',
                 'Pengaturan',
