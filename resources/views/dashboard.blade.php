@@ -1,30 +1,43 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard - Daftar Agen Takaful') }}
-        </h2>
+        <div class="flex items-center justify-between">
+            <h2 class="font-bold text-xl sm:text-2xl text-gray-800">
+                <i class="fas fa-th-large mr-2 text-blue-600"></i>{{ __('Dashboard Agen Takaful') }}
+            </h2>
+            @if(auth()->user()->isAdmin())
+                <a href="{{ url('/admin') }}" class="hidden sm:inline-flex items-center bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-2 rounded-lg hover:shadow-lg transition-all duration-300 text-sm font-medium">
+                    <i class="fas fa-shield-halved mr-2"></i>Panel Admin
+                </a>
+            @endif
+        </div>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-8 sm:py-12 bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Welcome Card -->
-            <div class="bg-gradient-to-r from-blue-600 to-green-600 rounded-lg shadow-lg p-6 mb-6 text-white">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div class="relative bg-gradient-to-r from-blue-600 to-green-600 rounded-2xl shadow-xl p-6 sm:p-8 mb-6 sm:mb-8 text-white overflow-hidden">
+                <!-- Decorative Elements -->
+                <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
+                <div class="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
+                
+                <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
-                        <h3 class="text-2xl font-bold mb-2">
-                            Selamat Datang, {{ auth()->user()->name }}! 👋
+                        <div class="flex items-center gap-3 mb-3">
+                            <h3 class="text-2xl sm:text-3xl font-bold">
+                                Selamat Datang, {{ auth()->user()->name }}! 👋
+                            </h3>
                             @if(auth()->user()->isAdmin())
-                                <span class="inline-flex items-center bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-sm font-bold ml-2">
+                                <span class="inline-flex items-center bg-yellow-400 text-yellow-900 px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold">
                                     <i class="fas fa-crown mr-1"></i>ADMIN
                                 </span>
                             @endif
-                        </h3>
-                        <p class="opacity-90">Temukan agen Takaful terbaik untuk kebutuhan asuransi syariah Anda</p>
+                        </div>
+                        <p class="text-blue-50 text-sm sm:text-base">Temukan agen Takaful terbaik untuk kebutuhan asuransi syariah Anda</p>
                     </div>
                     
                     @if(auth()->user()->isAdmin())
                         <a href="{{ url('/admin') }}" 
-                           class="bg-white text-blue-600 px-6 py-3 rounded-lg hover:bg-gray-100 transition font-semibold shadow-md whitespace-nowrap">
+                           class="bg-white text-blue-600 px-6 py-3 rounded-xl hover:shadow-2xl transition-all duration-300 font-semibold whitespace-nowrap transform hover:scale-105">
                             <i class="fas fa-shield-halved mr-2"></i>Kelola Agen
                         </a>
                     @endif
@@ -32,44 +45,44 @@
             </div>
 
             <!-- Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100">
                     <div class="p-6">
                         <div class="flex items-center">
-                            <div class="bg-blue-100 p-3 rounded-full">
-                                <i class="fas fa-users text-blue-600 text-2xl"></i>
+                            <div class="bg-gradient-to-br from-blue-500 to-blue-600 p-4 rounded-xl shadow-lg">
+                                <i class="fas fa-users text-white text-2xl"></i>
                             </div>
                             <div class="ml-4">
-                                <p class="text-gray-500 text-sm">Total Agen</p>
-                                <p class="text-2xl font-bold text-gray-800">{{ $agens->total() }}</p>
+                                <p class="text-gray-500 text-sm font-medium">Total Agen</p>
+                                <p class="text-3xl font-bold text-gray-800">{{ $agens->total() }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100">
                     <div class="p-6">
                         <div class="flex items-center">
-                            <div class="bg-green-100 p-3 rounded-full">
-                                <i class="fas fa-shield-halved text-green-600 text-2xl"></i>
+                            <div class="bg-gradient-to-br from-green-500 to-green-600 p-4 rounded-xl shadow-lg">
+                                <i class="fas fa-shield-halved text-white text-2xl"></i>
                             </div>
                             <div class="ml-4">
-                                <p class="text-gray-500 text-sm">Asuransi Syariah</p>
-                                <p class="text-2xl font-bold text-gray-800">100%</p>
+                                <p class="text-gray-500 text-sm font-medium">Asuransi Syariah</p>
+                                <p class="text-3xl font-bold text-gray-800">100%</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 sm:col-span-2 lg:col-span-1">
                     <div class="p-6">
                         <div class="flex items-center">
-                            <div class="bg-purple-100 p-3 rounded-full">
-                                <i class="fas fa-award text-purple-600 text-2xl"></i>
+                            <div class="bg-gradient-to-br from-yellow-500 to-orange-500 p-4 rounded-xl shadow-lg">
+                                <i class="fas fa-award text-white text-2xl"></i>
                             </div>
                             <div class="ml-4">
-                                <p class="text-gray-500 text-sm">Terpercaya</p>
-                                <p class="text-2xl font-bold text-gray-800">15+ Tahun</p>
+                                <p class="text-gray-500 text-sm font-medium">Terpercaya</p>
+                                <p class="text-3xl font-bold text-gray-800">15+ Tahun</p>
                             </div>
                         </div>
                     </div>
@@ -77,29 +90,35 @@
             </div>
 
             <!-- Agen List -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-                        <h3 class="text-xl font-bold text-gray-800">Daftar Agen Profesional</h3>
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+                <div class="p-4 sm:p-6 lg:p-8">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 sm:mb-8 gap-4">
+                        <div>
+                            <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-1">Daftar Agen Profesional</h3>
+                            <p class="text-sm text-gray-500">Temukan agen terbaik untuk kebutuhan Anda</p>
+                        </div>
                         
                         <!-- Search Form -->
-                        <form method="GET" action="{{ route('dashboard') }}" class="w-full md:w-auto">
+                        <form method="GET" action="{{ route('dashboard') }}" class="w-full lg:w-auto">
                             <div class="flex gap-2">
-                                <input 
-                                    type="text" 
-                                    name="search" 
-                                    value="{{ request('search') }}"
-                                    placeholder="Cari agen, kode, atau role..." 
-                                    class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full md:w-80"
-                                >
+                                <div class="relative flex-1 lg:w-80">
+                                    <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                    <input 
+                                        type="text" 
+                                        name="search" 
+                                        value="{{ request('search') }}"
+                                        placeholder="Cari agen, kode, atau role..." 
+                                        class="w-full pl-11 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                    >
+                                </div>
                                 <button 
                                     type="submit"
-                                    class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition whitespace-nowrap">
-                                    <i class="fas fa-search mr-1"></i>Cari
+                                    class="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-xl hover:shadow-lg transition-all duration-300 whitespace-nowrap font-medium">
+                                    <i class="fas fa-search mr-2"></i><span class="hidden sm:inline">Cari</span>
                                 </button>
                                 @if(request('search'))
                                     <a href="{{ route('dashboard') }}" 
-                                       class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition">
+                                       class="bg-gray-200 text-gray-700 px-4 py-3 rounded-xl hover:bg-gray-300 transition-all">
                                         <i class="fas fa-times"></i>
                                     </a>
                                 @endif
