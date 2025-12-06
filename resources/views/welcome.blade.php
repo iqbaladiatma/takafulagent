@@ -251,10 +251,7 @@
         
         <div class="section-container relative z-10">
             <div class="max-w-4xl mx-auto text-center animate-fade-in">
-                <div class="inline-flex items-center px-4 py-2 bg-white/20 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
-                    <i class="fas fa-star mr-2 text-yellow-300"></i>
-                    <span>Asuransi Syariah Terpercaya</span>
-                </div>
+               
                 
                 <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
                     Lindungi Keluarga Anda dengan 
