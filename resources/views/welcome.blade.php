@@ -14,6 +14,34 @@
                             blue: '#1D76BB',
                             green: '#8BC53F',
                             light: '#E8F5F1',
+                            darkBlue: '#004A99',
+                            darkGreen: '#008542',
+                            lightBlue: '#E6F2FF',
+                            lightGreen: '#E8F5F0'
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                        'slide-down': 'slideDown 0.3s ease-out'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-8px)' }
+                        },
+                        slideDown: {
+                            '0%': { transform: 'translateY(-10px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
                         }
                     }
                 }
@@ -22,365 +50,617 @@
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
         }
-        .float-animation {
-            animation: float 6s ease-in-out infinite;
+        
+        .section-container {
+            max-width: 1280px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
         }
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
+        
+        @media (min-width: 768px) {
+            .section-container {
+                padding-left: 2rem;
+                padding-right: 2rem;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+        }
+        
+        @media (min-width: 1024px) {
+            .section-container {
+                padding-left: 4rem;
+                padding-right: 4rem;
             }
         }
-        .fade-in-up {
-            animation: fadeInUp 0.8s ease-out;
+        
+        .card-shadow {
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+        }
+        
+        .card-shadow:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .line-clamp-2 {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+        
+        .btn-hover-effect {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-hover-effect:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            border-radius: 50%;
+            background: #ffffff;
+            box-shadow: 0 8px 20px rgba(0, 102, 204, 0.1);
+            border: 2px solid #E8F5F1;
+        }
+        
+        .mobile-menu {
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+        
+        .hero-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-gray-50 to-blue-50">
-    
-    <!-- Navbar -->
-    <nav class="bg-white/95 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-gray-100">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center py-4">
+<body class="bg-gray-50">
+
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="section-container">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
                 <div class="flex items-center">
-                    <img src="{{ asset('images/logo-takaful.png') }}" alt="Takaful Keluarga" class="h-10 sm:h-12">
+                    <img src="{{ asset('images/takaful-logo.svg') }}" alt="Takaful Keluarga" class="h-10 sm:h-12">
                 </div>
-                
-                <div class="hidden md:flex space-x-8">
-                    <a href="#beranda" class="text-gray-700 hover:text-takaful-blue transition font-medium relative group">
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-10">
+                    <a href="#beranda" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group">
                         Beranda
-                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-takaful-blue transition-all group-hover:w-full"></span>
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-takaful-blue group-hover:w-full transition-all duration-300"></span>
                     </a>
-                    <a href="#agen" class="text-gray-700 hover:text-takaful-blue transition font-medium relative group">
+                    <a href="#agen" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group">
                         Agen Kami
-                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-takaful-blue transition-all group-hover:w-full"></span>
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-takaful-blue group-hover:w-full transition-all duration-300"></span>
                     </a>
-                    <a href="#tentang" class="text-gray-700 hover:text-takaful-blue transition font-medium relative group">
+                    <a href="#layanan" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group">
+                        Layanan
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-takaful-blue group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#tentang" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group">
                         Tentang
-                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-takaful-blue transition-all group-hover:w-full"></span>
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-takaful-blue group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="#kontak" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group">
+                        Kontak
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-takaful-blue group-hover:w-full transition-all duration-300"></span>
                     </a>
                 </div>
-                
-                <div class="flex space-x-2 sm:space-x-3">
+
+                <!-- Auth Buttons - Desktop -->
+                <div class="hidden md:flex items-center space-x-4">
                     @auth
                         @if(auth()->user()->role === 'admin')
-                            <a href="/admin" class="bg-gradient-to-r from-takaful-blue to-blue-700 text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-lg hover:shadow-lg transition-all duration-300 text-sm sm:text-base font-medium">
-                                <i class="fas fa-user-shield mr-1 sm:mr-2"></i><span class="hidden sm:inline">Admin Panel</span><span class="sm:hidden">Admin</span>
+                            <a href="/admin" class="px-5 py-2.5 bg-takaful-blue text-white font-medium rounded-lg hover:bg-takaful-darkBlue transition-all duration-300 btn-hover-effect">
+                                <i class="fas fa-user-shield mr-2"></i>Admin
                             </a>
                         @else
-                            <a href="{{ route('dashboard') }}" class="bg-gradient-to-r from-takaful-green to-green-700 text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-lg hover:shadow-lg transition-all duration-300 text-sm sm:text-base font-medium">
-                                <i class="fas fa-th-large mr-1 sm:mr-2"></i><span class="hidden sm:inline">Dashboard</span><span class="sm:hidden">Menu</span>
+                            <a href="{{ route('dashboard') }}" class="px-5 py-2.5 bg-takaful-green text-white font-medium rounded-lg hover:bg-takaful-darkGreen transition-all duration-300 btn-hover-effect">
+                                <i class="fas fa-th-large mr-2"></i>Dashboard
                             </a>
                         @endif
                     @else
-                        <a href="{{ route('login') }}" class="text-takaful-blue border-2 border-takaful-blue px-4 sm:px-6 py-2 sm:py-2.5 rounded-lg hover:bg-takaful-blue hover:text-white transition-all duration-300 text-sm sm:text-base font-medium">
+                        <a href="{{ route('login') }}" class="px-5 py-2.5 border border-takaful-blue text-takaful-blue font-medium rounded-lg hover:bg-takaful-lightBlue transition-all duration-300 btn-hover-effect">
                             Masuk
                         </a>
-                        <a href="{{ route('register') }}" class="bg-gradient-to-r from-takaful-green to-green-700 text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-lg hover:shadow-lg transition-all duration-300 text-sm sm:text-base font-medium">
+                        <a href="{{ route('register') }}" class="px-5 py-2.5 bg-takaful-green text-white font-medium rounded-lg hover:bg-takaful-darkGreen transition-all duration-300 btn-hover-effect">
                             Daftar
                         </a>
                     @endauth
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuButton" class="md:hidden text-gray-700 hover:text-takaful-blue">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="mobile-menu hidden md:hidden bg-white py-4 border-t border-gray-100">
+                <div class="flex flex-col space-y-4">
+                    <a href="#beranda" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100">
+                        <i class="fas fa-home mr-3 text-takaful-blue"></i>Beranda
+                    </a>
+                    <a href="#agen" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100">
+                        <i class="fas fa-users mr-3 text-takaful-blue"></i>Agen Kami
+                    </a>
+                    <a href="#layanan" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100">
+                        <i class="fas fa-concierge-bell mr-3 text-takaful-blue"></i>Layanan
+                    </a>
+                    <a href="#tentang" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100">
+                        <i class="fas fa-info-circle mr-3 text-takaful-blue"></i>Tentang
+                    </a>
+                    <a href="#kontak" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100">
+                        <i class="fas fa-phone-alt mr-3 text-takaful-blue"></i>Kontak
+                    </a>
+                    
+                    <div class="pt-4 space-y-3">
+                        @auth
+                            @if(auth()->user()->role === 'admin')
+                                <a href="/admin" class="block text-center px-4 py-2.5 bg-takaful-blue text-white font-medium rounded-lg hover:bg-takaful-darkBlue transition-all duration-300">
+                                    <i class="fas fa-user-shield mr-2"></i>Admin Panel
+                                </a>
+                            @else
+                                <a href="{{ route('dashboard') }}" class="block text-center px-4 py-2.5 bg-takaful-green text-white font-medium rounded-lg hover:bg-takaful-darkGreen transition-all duration-300">
+                                    <i class="fas fa-th-large mr-2"></i>Dashboard
+                                </a>
+                            @endif
+                        @else
+                            <a href="{{ route('login') }}" class="block text-center px-4 py-2.5 border border-takaful-blue text-takaful-blue font-medium rounded-lg hover:bg-takaful-lightBlue transition-all duration-300">
+                                <i class="fas fa-sign-in-alt mr-2"></i>Masuk
+                            </a>
+                            <a href="{{ route('register') }}" class="block text-center px-4 py-2.5 bg-takaful-green text-white font-medium rounded-lg hover:bg-takaful-darkGreen transition-all duration-300">
+                                <i class="fas fa-user-plus mr-2"></i>Daftar
+                            </a>
+                        @endauth
+                    </div>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="beranda" class="relative bg-gradient-to-br from-takaful-blue via-blue-600 to-takaful-green text-white py-16 sm:py-20 lg:py-28 overflow-hidden">
-        <!-- Decorative Elements -->
-        <div class="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
+    <section id="beranda" class="relative overflow-hidden bg-takaful-blue text-white py-16 md:py-24">
+        <div class="absolute inset-0 z-0 hero-pattern"></div>
+        <div class="absolute top-0 right-0 w-64 h-64 bg-takaful-green opacity-10 rounded-full -translate-y-32 translate-x-32"></div>
+        <div class="absolute bottom-0 left-0 w-80 h-80 bg-takaful-blue opacity-10 rounded-full translate-y-40 -translate-x-40"></div>
         
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="max-w-5xl mx-auto text-center fade-in-up">
-                <div class="inline-block mb-4 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm font-semibold">
-                    ✨ Asuransi Syariah Terpercaya
+        <div class="section-container relative z-10">
+            <div class="max-w-4xl mx-auto text-center animate-fade-in">
+                <div class="inline-flex items-center px-4 py-2 bg-white/20 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
+                    <i class="fas fa-star mr-2 text-yellow-300"></i>
+                    <span>Asuransi Syariah Terpercaya</span>
                 </div>
-                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-                    Lindungi Masa Depan<br/>
-                    <span class="text-yellow-300">Keluarga Anda</span>
+                
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+                    Lindungi Keluarga Anda dengan 
+                    <span class="text-takaful-light">Asuransi Syariah</span>
                 </h1>
-                <p class="text-lg sm:text-xl md:text-2xl mb-10 opacity-95 max-w-3xl mx-auto leading-relaxed">
-                    Solusi asuransi syariah yang amanah dan terpercaya untuk melindungi yang Anda cintai
+                
+                <p class="text-lg md:text-xl mb-10 opacity-95 max-w-3xl mx-auto">
+                    Memberikan perlindungan terbaik berdasarkan prinsip syariah yang amanah, transparan, dan saling tolong-menolong
                 </p>
+                
                 <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16">
-                    <a href="#agen" class="group bg-white text-takaful-blue px-8 py-4 rounded-xl font-bold text-base sm:text-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1">
-                        <i class="fas fa-users mr-2 group-hover:scale-110 transition-transform"></i>Temui Agen Kami
+                    <a href="#agen" class="px-6 py-3.5 bg-white text-takaful-blue font-bold rounded-lg hover:bg-gray-100 transition-all duration-300 btn-hover-effect animate-slide-up shadow-lg">
+                        <i class="fas fa-users mr-3"></i>Temui Agen Kami
                     </a>
-                    <a href="{{ route('register') }}" class="group bg-takaful-green text-white px-8 py-4 rounded-xl font-bold text-base sm:text-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1 border-2 border-white/30">
-                        <i class="fas fa-user-plus mr-2 group-hover:scale-110 transition-transform"></i>Daftar Sekarang
+                    <a href="{{ route('register') }}" class="px-6 py-3.5 bg-takaful-green text-white font-bold rounded-lg hover:bg-takaful-darkGreen transition-all duration-300 btn-hover-effect animate-slide-up" style="animation-delay: 0.1s">
+                        <i class="fas fa-user-plus mr-3"></i>Daftar Sekarang
                     </a>
                 </div>
                 
                 <!-- Stats -->
-                <div class="grid grid-cols-3 gap-4 sm:gap-8 max-w-3xl mx-auto">
-                    <div class="text-center p-4 bg-white/10 backdrop-blur-sm rounded-2xl hover:bg-white/20 transition-all duration-300">
-                        <div class="text-3xl sm:text-4xl md:text-5xl font-bold mb-2">{{ $totalAgen }}+</div>
-                        <div class="text-xs sm:text-sm opacity-90">Agen Profesional</div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+                    <div class="stat-card rounded-xl p-5 text-center animate-float">
+                        <div class="text-2xl md:text-3xl font-bold mb-2">{{ $totalAgen }}+</div>
+                        <div class="text-sm opacity-90 font-medium">Agen Profesional</div>
                     </div>
-                    <div class="text-center p-4 bg-white/10 backdrop-blur-sm rounded-2xl hover:bg-white/20 transition-all duration-300">
-                        <div class="text-3xl sm:text-4xl md:text-5xl font-bold mb-2">10K+</div>
-                        <div class="text-xs sm:text-sm opacity-90">Nasabah Terlayani</div>
+                    <div class="stat-card rounded-xl p-5 text-center animate-float" style="animation-delay: 0.2s">
+                        <div class="text-2xl md:text-3xl font-bold mb-2">10K+</div>
+                        <div class="text-sm opacity-90 font-medium">Nasabah Terlayani</div>
                     </div>
-                    <div class="text-center p-4 bg-white/10 backdrop-blur-sm rounded-2xl hover:bg-white/20 transition-all duration-300">
-                        <div class="text-3xl sm:text-4xl md:text-5xl font-bold mb-2">15+</div>
-                        <div class="text-xs sm:text-sm opacity-90">Tahun Pengalaman</div>
+                    <div class="stat-card rounded-xl p-5 text-center animate-float" style="animation-delay: 0.4s">
+                        <div class="text-2xl md:text-3xl font-bold mb-2">15+</div>
+                        <div class="text-sm opacity-90 font-medium">Tahun Pengalaman</div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Layanan Unggulan -->
+    <section class="py-16 bg-white">
+        <div class="section-container">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Layanan Unggulan Kami</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Produk asuransi syariah terbaik untuk semua kebutuhan perlindungan Anda</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl p-6 card-shadow border border-gray-100 hover:border-takaful-blue transition-all duration-300">
+                    <div class="feature-icon mb-6">
+                        <i class="fas fa-heartbeat text-takaful-green text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Asuransi Kesehatan Syariah</h3>
+                    <p class="text-gray-600 mb-4">Perlindungan kesehatan lengkap untuk seluruh anggota keluarga dengan prinsip syariah</p>
+                    <a href="#" class="text-takaful-blue font-medium hover:text-takaful-darkBlue inline-flex items-center">
+                        Selengkapnya <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 card-shadow border border-gray-100 hover:border-takaful-green transition-all duration-300">
+                    <div class="feature-icon mb-6">
+                        <i class="fas fa-user-shield text-takaful-blue text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Asuransi Jiwa Syariah</h3>
+                    <p class="text-gray-600 mb-4">Perlindungan finansial keluarga Anda dengan sistem bagi hasil yang adil</p>
+                    <a href="#" class="text-takaful-green font-medium hover:text-takaful-darkGreen inline-flex items-center">
+                        Selengkapnya <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <div class="bg-white rounded-xl p-6 card-shadow border border-gray-100 hover:border-takaful-blue transition-all duration-300">
+                    <div class="feature-icon mb-6">
+                        <i class="fas fa-graduation-cap text-takaful-green text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Asuransi Pendidikan</h3>
+                    <p class="text-gray-600 mb-4">Jaminan masa depan pendidikan anak dengan sistem syariah yang amanah</p>
+                    <a href="#" class="text-takaful-blue font-medium hover:text-takaful-darkBlue inline-flex items-center">
+                        Selengkapnya <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Featured Agen Section -->
-    <section id="agen" class="py-16 sm:py-20 lg:py-24 bg-white">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12 sm:mb-16 fade-in-up">
-                <div class="inline-block mb-4 px-4 py-2 bg-takaful-light rounded-full text-takaful-blue text-sm font-semibold">
-                    👥 Tim Profesional
-                </div>
-                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">Agen Profesional Kami</h2>
-                <p class="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">Temui agen-agen terbaik yang siap membantu mewujudkan perlindungan finansial Anda</p>
+    <section id="agen" class="py-16 bg-takaful-lightBlue">
+        <div class="section-container">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Agen Profesional Kami</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Tim agen profesional kami siap membantu Anda mendapatkan perlindungan yang tepat</p>
             </div>
 
             @if($featuredAgens->count() > 0)
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto mb-12">
+<div class="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($featuredAgens as $agen)
-                        <div class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-takaful-blue/30 transform hover:-translate-y-2">
-                            <!-- Header with Gradient -->
-                            <div class="relative bg-gradient-to-r from-takaful-blue to-takaful-green h-32 sm:h-36">
-                                <div class="absolute inset-0 bg-black/5"></div>
-                                <!-- Avatar -->
-                                <div class="absolute -bottom-16 left-1/2 transform -translate-x-1/2">
-                                    <div class="relative">
-                                        @if($agen->foto)
-                                            <img 
-                                                src="{{ asset('storage/' . $agen->foto) }}" 
-                                                alt="{{ $agen->nama }}"
-                                                class="w-28 h-28 sm:w-32 sm:h-32 rounded-full border-4 border-white shadow-xl object-cover bg-white"
-                                                onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($agen->nama) }}&size=200&background=0066CC&color=fff&bold=true'"
-                                            >
-                                        @else
-                                            <img 
-                                                src="https://ui-avatars.com/api/?name={{ urlencode($agen->nama) }}&size=200&background=0066CC&color=fff&bold=true" 
-                                                alt="{{ $agen->nama }}"
-                                                class="w-28 h-28 sm:w-32 sm:h-32 rounded-full border-4 border-white shadow-xl object-cover bg-white"
-                                            >
-                                        @endif
-                                        <div class="absolute bottom-1 right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white"></div>
+                        <div class="bg-white rounded-xl card-shadow overflow-hidden transition-all duration-300 hover:-translate-y-2">
+                            <div class="relative h-36 bg-takaful-blue">
+<div class="absolute -bottom-7 left-1/2 transform -translate-x-1/2">
+                                    <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                                        <img 
+                                            src="{{ $agen->foto ? asset('storage/' . $agen->foto) : 'https://ui-avatars.com/api/?name=' . urlencode($agen->nama) . '&background=0066CC&color=fff&size=400' }}" 
+                                            alt="{{ $agen->nama }}"
+                                            class="w-full h-full object-cover"
+                                            onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($agen->nama) }}&background=0066CC&color=fff&size=400'"
+                                        >
                                     </div>
                                 </div>
                             </div>
                             
-                            <!-- Content -->
-                            <div class="pt-20 px-6 pb-6 text-center">
-                                <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-takaful-blue transition-colors">
-                                    {{ $agen->nama }}
-                                </h3>
-                                <p class="text-takaful-blue font-semibold text-sm mb-3">{{ $agen->role }}</p>
-                                <span class="inline-flex items-center bg-takaful-light text-takaful-green px-4 py-1.5 rounded-full text-xs font-bold mb-4">
-                                    <i class="fas fa-id-badge mr-1.5"></i>{{ $agen->kode_agen }}
-                                </span>
+                            <div class="pt-16 pb-6 px-5 text-center">
+                                <h3 class="text-lg font-bold text-gray-800 mb-1">{{ $agen->nama }}</h3>
+                                <p class="text-takaful-blue font-semibold mb-2 text-sm">{{ $agen->role }}</p>
                                 
-                                @if($agen->deskripsi)
-                                    <p class="text-gray-600 text-sm mb-6 line-clamp-3 min-h-[60px]">
-                                        {{ $agen->deskripsi }}
-                                    </p>
-                                @else
-                                    <p class="text-gray-400 text-sm mb-6 italic min-h-[60px]">
-                                        Agen profesional siap membantu Anda
-                                    </p>
-                                @endif
+                                <div class="inline-flex items-center bg-takaful-light text-takaful-green px-3 py-1 rounded-full text-xs font-bold mb-3">
+                                    <i class="fas fa-id-badge mr-1"></i>
+                                    {{ $agen->kode_agen }}
+                                </div>
                                 
-                                <a href="{{ route('agen.show', $agen->kode_agen) }}" 
-                                   class="inline-flex items-center justify-center w-full bg-gradient-to-r from-takaful-green to-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105">
-                                    <i class="fas fa-eye mr-2"></i>Lihat Profil Lengkap
-                                </a>
+                                <p class="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed min-h-[2.5rem]">
+                                    {{ Str::limit($agen->deskripsi, 100) }}
+                                </p>
+                                
+                                <div class="flex space-x-2">
+                                    <a href="{{ route('agen.show', $agen->kode_agen) }}" 
+                                       class="flex-1 bg-takaful-green text-white px-3 py-2 rounded-lg hover:bg-takaful-darkGreen transition-all duration-300 font-medium text-center text-sm">
+                                        <i class="fas fa-eye mr-1"></i>Profil
+                                    </a>
+                                    <a href="https://wa.me/{{ $agen->no_hp ?? '6281234567890' }}" target="_blank"
+                                       class="flex-1 bg-green-500 text-white px-3 py-2 rounded-lg hover:bg-green-600 transition-all duration-300 font-medium text-center text-sm">
+                                        <i class="fab fa-whatsapp mr-1"></i>Chat
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
 
-                <div class="text-center">
+                <div class="text-center mt-12">
                     @auth
-                        <a href="{{ route('dashboard') }}" class="inline-flex items-center bg-gradient-to-r from-takaful-blue to-blue-700 text-white px-8 py-4 rounded-xl font-bold hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-lg">
+                        <a href="{{ route('dashboard') }}" class="inline-flex items-center px-6 py-3 bg-takaful-blue text-white font-bold rounded-lg hover:bg-takaful-darkBlue transition-all duration-300 btn-hover-effect">
                             <i class="fas fa-th-large mr-2"></i>Lihat Semua Agen
-                            <i class="fas fa-arrow-right ml-2"></i>
                         </a>
                     @else
-                        <a href="{{ route('register') }}" class="inline-flex items-center bg-gradient-to-r from-takaful-blue to-blue-700 text-white px-8 py-4 rounded-xl font-bold hover:shadow-xl transition-all duration-300 transform hover:scale-105 text-lg">
+                        <a href="{{ route('register') }}" class="inline-flex items-center px-6 py-3 bg-takaful-blue text-white font-bold rounded-lg hover:bg-takaful-darkBlue transition-all duration-300 btn-hover-effect">
                             <i class="fas fa-user-plus mr-2"></i>Daftar untuk Lihat Semua
-                            <i class="fas fa-arrow-right ml-2"></i>
                         </a>
                     @endauth
                 </div>
             @else
-                <div class="text-center py-16">
-                    <div class="inline-flex items-center justify-center w-24 h-24 bg-gray-100 rounded-full mb-6">
-                        <i class="fas fa-users text-5xl text-gray-400"></i>
+                <div class="text-center py-12 bg-white rounded-xl card-shadow">
+                    <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-takaful-light flex items-center justify-center">
+                        <i class="fas fa-users text-3xl text-takaful-blue"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-2">Belum Ada Agen Tersedia</h3>
-                    <p class="text-gray-500 text-lg">Agen profesional akan segera hadir untuk melayani Anda</p>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Belum ada agen tersedia</h3>
+                    <p class="text-gray-600 max-w-md mx-auto mb-6">Tim agen profesional kami sedang dalam proses seleksi.</p>
+                    <a href="#kontak" class="inline-flex items-center px-5 py-2.5 bg-takaful-green text-white font-medium rounded-lg hover:bg-takaful-darkGreen transition-all duration-300">
+                        <i class="fas fa-phone-alt mr-2"></i>Hubungi Kami
+                    </a>
                 </div>
             @endif
         </div>
     </section>
 
     <!-- Tentang Section -->
-    <section id="tentang" class="py-16 sm:py-20 lg:py-24 bg-gradient-to-br from-gray-50 to-blue-50">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-6xl mx-auto">
-                <div class="text-center mb-12 sm:mb-16 fade-in-up">
-                    <div class="inline-block mb-4 px-4 py-2 bg-white rounded-full text-takaful-blue text-sm font-semibold shadow-sm">
-                        ⭐ Keunggulan Kami
+    <section id="tentang" class="py-16 bg-white">
+        <div class="section-container">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6">Mengapa Memilih Takaful?</h2>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Takaful Indonesia adalah perusahaan asuransi syariah terpercaya dengan lebih dari 15 tahun pengalaman melayani masyarakat Indonesia. Kami berkomitmen memberikan perlindungan terbaik berdasarkan prinsip-prinsip syariah.
+                    </p>
+                    
+                    <div class="space-y-5">
+                        <div class="flex items-start bg-takaful-light rounded-lg p-4">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-takaful-green flex items-center justify-center mr-4">
+                                <i class="fas fa-shield-alt text-white text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-1">Sesuai Syariah</h4>
+                                <p class="text-gray-600 text-sm">Diawasi oleh Dewan Pengawas Syariah yang kompeten dan berpengalaman</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start bg-takaful-lightBlue rounded-lg p-4">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-takaful-blue flex items-center justify-center mr-4">
+                                <i class="fas fa-hands-helping text-white text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-1">Prinsip Tolong-Menolong</h4>
+                                <p class="text-gray-600 text-sm">Menerapkan prinsip ta'awun dalam setiap produk asuransi yang kami tawarkan</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start bg-takaful-light rounded-lg p-4">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-takaful-green flex items-center justify-center mr-4">
+                                <i class="fas fa-award text-white text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-1">Terpercaya & Berpengalaman</h4>
+                                <p class="text-gray-600 text-sm">Lebih dari 15 tahun melayani ribuan nasabah di seluruh Indonesia</p>
+                            </div>
+                        </div>
                     </div>
-                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">Mengapa Memilih Takaful?</h2>
-                    <p class="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto">Asuransi syariah dengan prinsip tolong-menolong yang amanah dan terpercaya</p>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-                    <div class="group bg-white rounded-2xl p-8 text-center hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
-                        <div class="bg-gradient-to-br from-takaful-blue to-blue-600 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                            <i class="fas fa-shield-halved text-white text-3xl"></i>
+                
+                <div>
+                    <div class="bg-takaful-light rounded-2xl p-8">
+                        <h3 class="text-xl font-bold text-gray-800 mb-6">Visi & Misi Kami</h3>
+                        
+                        <div class="mb-6">
+                            <h4 class="font-bold text-lg mb-3 text-takaful-blue">Visi</h4>
+                            <p class="text-gray-600">Menjadi perusahaan asuransi syariah terdepan yang memberikan perlindungan komprehensif dan bernilai tambah bagi masyarakat Indonesia.</p>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">Sesuai Syariah</h3>
-                        <p class="text-gray-600 leading-relaxed">Diawasi oleh Dewan Pengawas Syariah dan sesuai dengan prinsip Islam</p>
-                    </div>
-
-                    <div class="group bg-white rounded-2xl p-8 text-center hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
-                        <div class="bg-gradient-to-br from-takaful-green to-green-600 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                            <i class="fas fa-hands-helping text-white text-3xl"></i>
+                        
+                        <div>
+                            <h4 class="font-bold text-lg mb-3 text-takaful-green">Misi</h4>
+                            <ul class="space-y-2 text-gray-600">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle mt-1 mr-3 text-takaful-green"></i>
+                                    <span>Menyediakan produk asuransi syariah yang inovatif dan terjangkau</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle mt-1 mr-3 text-takaful-blue"></i>
+                                    <span>Memberikan layanan terbaik melalui jaringan agen profesional</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle mt-1 mr-3 text-takaful-green"></i>
+                                    <span>Mengedukasi masyarakat tentang manfaat asuransi syariah</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle mt-1 mr-3 text-takaful-blue"></i>
+                                    <span>Menerapkan prinsip transparansi dan keadilan dalam setiap transaksi</span>
+                                </li>
+                            </ul>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">Tolong-Menolong</h3>
-                        <p class="text-gray-600 leading-relaxed">Prinsip ta'awun dalam setiap produk untuk saling membantu sesama</p>
-                    </div>
-
-                    <div class="group bg-white rounded-2xl p-8 text-center hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100">
-                        <div class="bg-gradient-to-br from-yellow-500 to-orange-500 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                            <i class="fas fa-award text-white text-3xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">Terpercaya</h3>
-                        <p class="text-gray-600 leading-relaxed">Berpengalaman lebih dari 15 tahun melayani masyarakat Indonesia</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- CTA Section -->
+    <section class="py-16 bg-takaful-green text-white">
+        <div class="section-container">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4">Siap Melindungi Masa Depan Keluarga Anda?</h2>
+                <p class="text-lg mb-8 opacity-95">Daftar sekarang dan dapatkan konsultasi gratis dari agen profesional kami</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="{{ route('register') }}" class="px-6 py-3.5 bg-white text-takaful-green font-bold rounded-lg hover:bg-gray-100 transition-all duration-300 btn-hover-effect shadow-lg">
+                        <i class="fas fa-user-plus mr-2"></i>Daftar Sekarang
+                    </a>
+                    <a href="#kontak" class="px-6 py-3.5 border-2 border-white text-white font-bold rounded-lg hover:bg-white/10 transition-all duration-300 btn-hover-effect">
+                        <i class="fas fa-phone-alt mr-2"></i>Hubungi Kami
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
-    <footer class="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-12 sm:py-16">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-                <div class="sm:col-span-2 lg:col-span-1">
+    <footer id="kontak" class="bg-gray-900 text-white pt-12 pb-6">
+        <div class="section-container">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+                <div>
                     <div class="mb-6">
-                        <img src="{{ asset('images/logo-takaful.png') }}" alt="Takaful Keluarga" class="h-10 sm:h-12">
+                        <img src="{{ asset('images/takaful-logo.svg') }}" alt="Takaful Keluarga" class="h-10 sm:h-12">
                     </div>
-                    <p class="text-gray-400 leading-relaxed mb-6">Asuransi syariah terpercaya untuk masa depan yang lebih baik dan penuh berkah</p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-takaful-blue rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110">
+                    <p class="text-gray-400 mb-6 leading-relaxed">Asuransi syariah terpercaya untuk melindungi masa depan Anda dan keluarga dengan prinsip syariah yang amanah.</p>
+                    
+                    <div class="flex space-x-3">
+                        <a href="#" class="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-takaful-blue transition-all duration-300">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-takaful-blue rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110">
-                            <i class="fab fa-twitter"></i>
+                        <a href="#" class="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-takaful-blue transition-all duration-300">
+                            <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-takaful-green rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110">
+                        <a href="#" class="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-takaful-green transition-all duration-300">
                             <i class="fab fa-whatsapp"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-takaful-blue rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-110">
-                            <i class="fab fa-instagram"></i>
+                        <a href="#" class="w-9 h-9 rounded-full bg-gray-800 flex items-center justify-center hover:bg-blue-500 transition-all duration-300">
+                            <i class="fab fa-twitter"></i>
                         </a>
                     </div>
                 </div>
 
                 <div>
-                    <h4 class="font-bold text-lg mb-6">Link Cepat</h4>
-                    <ul class="space-y-3">
-                        <li><a href="#beranda" class="text-gray-400 hover:text-takaful-green transition-colors flex items-center group">
-                            <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform"></i>Beranda
-                        </a></li>
-                        <li><a href="#agen" class="text-gray-400 hover:text-takaful-green transition-colors flex items-center group">
-                            <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform"></i>Agen Kami
-                        </a></li>
-                        <li><a href="#tentang" class="text-gray-400 hover:text-takaful-green transition-colors flex items-center group">
-                            <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform"></i>Tentang
-                        </a></li>
-                        <li><a href="{{ route('register') }}" class="text-gray-400 hover:text-takaful-green transition-colors flex items-center group">
-                            <i class="fas fa-chevron-right mr-2 text-xs group-hover:translate-x-1 transition-transform"></i>Daftar
-                        </a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4 class="font-bold text-lg mb-6">Layanan</h4>
+                    <h4 class="font-bold text-lg mb-5 text-white">Perusahaan</h4>
                     <ul class="space-y-3 text-gray-400">
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-takaful-green mr-2 mt-1"></i>
-                            <span>Asuransi Jiwa</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-takaful-green mr-2 mt-1"></i>
-                            <span>Asuransi Kesehatan</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-takaful-green mr-2 mt-1"></i>
-                            <span>Asuransi Pendidikan</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-check-circle text-takaful-green mr-2 mt-1"></i>
-                            <span>Investasi Syariah</span>
-                        </li>
+                        <li><a href="#beranda" class="hover:text-takaful-green transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-takaful-blue"></i>Beranda</a></li>
+                        <li><a href="#agen" class="hover:text-takaful-green transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-takaful-blue"></i>Agen Kami</a></li>
+                        <li><a href="#layanan" class="hover:text-takaful-green transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-takaful-blue"></i>Layanan</a></li>
+                        <li><a href="#tentang" class="hover:text-takaful-green transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-takaful-blue"></i>Tentang Kami</a></li>
                     </ul>
                 </div>
 
                 <div>
-                    <h4 class="font-bold text-lg mb-6">Hubungi Kami</h4>
-                    <ul class="space-y-4">
-                        <li class="flex items-start text-gray-400">
-                            <div class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
-                                <i class="fas fa-phone text-takaful-green"></i>
-                            </div>
+                    <h4 class="font-bold text-lg mb-5 text-white">Layanan</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#" class="hover:text-takaful-green transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-takaful-green"></i>Asuransi Jiwa Syariah</a></li>
+                        <li><a href="#" class="hover:text-takaful-green transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-takaful-green"></i>Asuransi Kesehatan</a></li>
+                        <li><a href="#" class="hover:text-takaful-green transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-takaful-green"></i>Asuransi Pendidikan</a></li>
+                        <li><a href="#" class="hover:text-takaful-green transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-takaful-green"></i>Asuransi Investasi</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-lg mb-5 text-white">Kontak Kami</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-phone mt-1 mr-3 text-takaful-green"></i>
                             <div>
-                                <div class="text-sm text-gray-500">Telepon</div>
-                                <div class="font-semibold">1500-123</div>
+                                <div class="font-medium">Telepon</div>
+                                <div class="text-sm">1500-123 (24 Jam)</div>
                             </div>
                         </li>
-                        <li class="flex items-start text-gray-400">
-                            <div class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
-                                <i class="fas fa-envelope text-takaful-green"></i>
-                            </div>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-3 text-takaful-blue"></i>
                             <div>
-                                <div class="text-sm text-gray-500">Email</div>
-                                <div class="font-semibold">info@takaful.co.id</div>
+                                <div class="font-medium">Email</div>
+                                <div class="text-sm">info@takaful.co.id</div>
                             </div>
                         </li>
-                        <li class="flex items-start text-gray-400">
-                            <div class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
-                                <i class="fas fa-map-marker-alt text-takaful-green"></i>
-                            </div>
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-takaful-green"></i>
                             <div>
-                                <div class="text-sm text-gray-500">Alamat</div>
-                                <div class="font-semibold">Jakarta, Indonesia</div>
+                                <div class="font-medium">Alamat</div>
+                                <div class="text-sm">Gedung Takaful Tower<br>Jl. Sudirman Kav. 21<br>Jakarta Selatan</div>
                             </div>
                         </li>
                     </ul>
                 </div>
             </div>
 
-            <div class="border-t border-gray-800 pt-8">
-                <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-                    <p class="text-gray-400 text-sm text-center sm:text-left">
-                        &copy; {{ date('Y') }} Takaful Indonesia. All rights reserved.
-                    </p>
-                    <div class="flex gap-6 text-sm text-gray-400">
-                        <a href="#" class="hover:text-takaful-green transition-colors">Kebijakan Privasi</a>
-                        <a href="#" class="hover:text-takaful-green transition-colors">Syarat & Ketentuan</a>
-                    </div>
-                </div>
-            </d
+            <div class="border-t border-gray-800 pt-6 text-center text-gray-400 text-sm">
+                <p>&copy; {{ date('Y') }} Takaful Indonesia. Semua hak dilindungi undang-undang.</p>
+                <p class="mt-1 text-xs">Asuransi syariah yang diawasi oleh Otoritas Jasa Keuangan</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobileMenuButton').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const icon = this.querySelector('i');
+            
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('active');
+            
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.className = 'fas fa-bars text-2xl';
+            } else {
+                icon.className = 'fas fa-times text-2xl';
+            }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuButton = document.getElementById('mobileMenuButton');
+            
+            if (!mobileMenu.contains(event.target) && !menuButton.contains(event.target)) {
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenu.classList.remove('active');
+                    menuButton.querySelector('i').className = 'fas fa-bars text-2xl';
+                }
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    const mobileMenu = document.getElementById('mobileMenu');
+                    const menuButton = document.getElementById('mobileMenuButton');
+                    
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenu.classList.remove('active');
+                        menuButton.querySelector('i').className = 'fas fa-bars text-2xl';
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
