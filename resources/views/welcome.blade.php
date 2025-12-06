@@ -51,7 +51,7 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
                 <div class="flex items-center">
-                    <img src="{{ asset('images/takaful-logo.svg') }}" alt="Takaful Keluarga" class="h-10 sm:h-12">
+                    <img src="{{ asset('images/logo-takaful.png') }}" alt="Takaful Keluarga" class="h-10 sm:h-12">
                 </div>
                 
                 <div class="hidden md:flex space-x-8">
@@ -280,7 +280,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
                 <div class="sm:col-span-2 lg:col-span-1">
                     <div class="mb-6">
-                        <img src="{{ asset('images/takaful-logo.svg') }}" alt="Takaful Keluarga" class="h-10 sm:h-12">
+                        <img src="{{ asset('images/logo-takaful.png') }}" alt="Takaful Keluarga" class="h-10 sm:h-12">
                     </div>
                     <p class="text-gray-400 leading-relaxed mb-6">Asuransi syariah terpercaya untuk masa depan yang lebih baik dan penuh berkah</p>
                     <div class="flex space-x-4">
