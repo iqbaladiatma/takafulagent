@@ -144,7 +144,7 @@
             <div class="flex items-center justify-between h-20">
                 <!-- Logo -->
                 <div class="flex items-center">
-                    <img src="{{ asset('images/takaful-logo.svg') }}" alt="Takaful Keluarga" class="h-10 sm:h-12">
+                    <img src="{{ asset('images/logo-takaful.png') }}" alt="Takaful Keluarga" class="h-10 sm:h-12">
                 </div>
 
                 <!-- Desktop Menu -->
@@ -520,7 +520,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
                 <div>
                     <div class="mb-6">
-                        <img src="{{ asset('images/takaful-logo.svg') }}" alt="Takaful Keluarga" class="h-10 sm:h-12">
+                        <img src="{{ asset('images/logo-takaful.png') }}" alt="Takaful Keluarga" class="h-10 sm:h-12">
                     </div>
                     <p class="text-gray-400 mb-6 leading-relaxed">Asuransi syariah terpercaya untuk melindungi masa depan Anda dan keluarga dengan prinsip syariah yang amanah.</p>
                     
