@@ -339,81 +339,94 @@
     </section>
 
     <!-- Featured Agen Section -->
-<section id="agen" class="py-16 bg-takaful-lightBlue">
+<!-- Featured Agen Section -->
+<section id="agen" class="py-12 md:py-16 bg-takaful-lightBlue">
     <div class="section-container">
-        <div class="text-center mb-12">
-            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Agen Profesional Kami</h2>
-            <p class="text-gray-600 max-w-2xl mx-auto">Tim agen profesional kami siap membantu Anda mendapatkan perlindungan yang tepat</p>
+        <div class="text-center mb-10 md:mb-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-3 md:mb-4">Agen Profesional Kami</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">Tim agen profesional kami siap membantu Anda mendapatkan perlindungan yang tepat</p>
         </div>
 
         @if($featuredAgens->count() > 0)
-            <div class="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Grid layout: 2 kolom di HP, 3 di tablet, 4 di laptop -->
+            <div class="mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
                 @foreach($featuredAgens as $agen)
-                    <!-- Card yang bisa diklik -->
+                    <!-- Card dengan warna biru bersih -->
                     <a href="{{ route('agen.show', $agen->kode_agen) }}" 
-                       class="bg-white rounded-xl card-shadow overflow-hidden transition-all duration-300 hover:-translate-y-2 block cursor-pointer group">
-                        <div class="relative h-36 bg-takaful-blue">
-                            <div class="absolute -bottom-7 left-1/2 transform -translate-x-1/2">
-                                <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg group-hover:border-takaful-green transition-all duration-300">
-                                    <img 
-                                        src="{{ $agen->foto ? asset('storage/' . $agen->foto) : 'https://ui-avatars.com/api/?name=' . urlencode($agen->nama) . '&background=0066CC&color=fff&size=400' }}" 
-                                        alt="{{ $agen->nama }}"
-                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                        onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($agen->nama) }}&background=0066CC&color=fff&size=400'"
-                                    >
-                                </div>
+                       class="bg-white rounded-lg md:rounded-xl card-shadow overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg block cursor-pointer group border border-takaful-lightBlue/30 hover:border-takaful-blue/50">
+                        
+                        <!-- Bagian atas dengan background biru gradient -->
+                        <div class="relative pt-8 md:pt-10 px-2 md:px-3 bg-gradient-to-r from-takaful-blue to-takaful-darkBlue rounded-t-lg md:rounded-t-xl">
+                            <!-- Foto agen -->
+                            <div class="w-20 h-20 md:w-24 md:h-24 mx-auto rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:border-takaful-blue/80 group-hover:shadow-[0_0_20px_rgba(29,118,187,0.3)] transition-all duration-300 bg-white relative z-10">
+                                <img 
+                                    src="{{ $agen->foto ? asset('storage/' . $agen->foto) : 'https://ui-avatars.com/api/?name=' . urlencode($agen->nama) . '&background=1D76BB&color=fff&size=200' }}" 
+                                    alt="{{ $agen->nama }}"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                    onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($agen->nama) }}&background=1D76BB&color=fff&size=200'"
+                                >
                             </div>
+                            <!-- Decorative element - biru saja -->
+                            <div class="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-takaful-blue/60 to-takaful-darkBlue/60"></div>
                         </div>
                         
-                        <div class="pt-16 pb-6 px-5 text-center">
-                            <h3 class="text-lg font-bold text-gray-800 mb-1 group-hover:text-takaful-blue transition-colors duration-300">{{ $agen->nama }}</h3>
-                            <p class="text-takaful-blue font-semibold mb-2 text-sm">{{ $agen->role }}</p>
+                        <!-- Bagian bawah dengan informasi -->
+                        <div class="pb-4 md:pb-5 px-3 md:px-4 text-center pt-6">
+                            <!-- Nama -->
+                            <h3 class="font-bold text-gray-800 mb-1 group-hover:text-takaful-blue transition-colors duration-300 text-sm md:text-base truncate">
+                                {{ $agen->nama }}
+                            </h3>
                             
-                            <div class="inline-flex items-center bg-takaful-light text-takaful-green px-3 py-1 rounded-full text-xs font-bold mb-3">
-                                <i class="fas fa-id-badge mr-1"></i>
-                                {{ $agen->kode_agen }}
-                            </div>
-                            
-                            <p class="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed min-h-[2.5rem]">
-                                {{ Str::limit($agen->deskripsi, 100) }}
+                            <!-- Posisi/Role -->
+                            <p class="text-takaful-blue font-semibold mb-3 text-xs md:text-sm truncate">
+                                {{ $agen->role }}
                             </p>
                             
-                            <!-- Indikator klik (mengganti tombol) -->
-                            <div class="text-takaful-blue font-medium text-sm flex items-center justify-center">
-                                <span>Lihat profil lengkap</span>
-                                <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
+                            <!-- Kode Agen -->
+                            <div class="inline-flex items-center bg-takaful-lightBlue text-takaful-blue px-3 py-1.5 rounded-full text-xs font-bold mb-4 border border-takaful-blue/30 group-hover:border-takaful-blue/60 transition-all duration-300">
+                                <i class="fas fa-id-badge mr-1.5"></i>
+                                <span class="font-bold tracking-wide">{{ $agen->kode_agen }}</span>
+                            </div>
+                            
+                            <!-- Tombol Profil -->
+                            <div class="mt-2">
+                                <span class="inline-flex items-center justify-center text-takaful-blue font-semibold text-xs md:text-sm bg-takaful-lightBlue hover:bg-takaful-blue hover:text-white px-4 py-2 rounded-lg transition-all duration-300 shadow-sm group-hover:shadow-md">
+                                    <span>Lihat Profil</span>
+                                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
+                                </span>
                             </div>
                         </div>
                     </a>
                 @endforeach
             </div>
 
-            <div class="text-center mt-12">
+            <!-- Tombol Lihat Semua -->
+            <div class="text-center mt-10 md:mt-12">
                 @auth
-                    <a href="{{ route('dashboard') }}" class="inline-flex items-center px-6 py-3 bg-takaful-blue text-white font-bold rounded-lg hover:bg-takaful-darkBlue transition-all duration-300 btn-hover-effect">
+                    <a href="{{ route('dashboard') }}" class="inline-flex items-center px-6 py-3 bg-takaful-blue text-white font-bold rounded-lg hover:bg-takaful-darkBlue transition-all duration-300 btn-hover-effect shadow-lg hover:shadow-xl">
                         <i class="fas fa-th-large mr-2"></i>Lihat Semua Agen
                     </a>
                 @else
-                    <a href="{{ route('register') }}" class="inline-flex items-center px-6 py-3 bg-takaful-blue text-white font-bold rounded-lg hover:bg-takaful-darkBlue transition-all duration-300 btn-hover-effect">
+                    <a href="{{ route('register') }}" class="inline-flex items-center px-6 py-3 bg-takaful-blue text-white font-bold rounded-lg hover:bg-takaful-darkBlue transition-all duration-300 btn-hover-effect shadow-lg hover:shadow-xl">
                         <i class="fas fa-user-plus mr-2"></i>Daftar untuk Lihat Semua
                     </a>
                 @endauth
             </div>
         @else
-            <div class="text-center py-12 bg-white rounded-xl card-shadow">
-                <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-takaful-light flex items-center justify-center">
-                    <i class="fas fa-users text-3xl text-takaful-blue"></i>
+            <!-- Jika tidak ada agen -->
+            <div class="text-center py-10 bg-white rounded-xl card-shadow max-w-md mx-auto border border-takaful-lightBlue/50">
+                <div class="w-16 h-16 md:w-20 md:h-20 mx-auto mb-4 rounded-full bg-takaful-lightBlue flex items-center justify-center border-4 border-white shadow-lg">
+                    <i class="fas fa-users text-2xl md:text-3xl text-takaful-blue"></i>
                 </div>
-                <h3 class="text-xl font-bold text-gray-800 mb-2">Belum ada agen tersedia</h3>
-                <p class="text-gray-600 max-w-md mx-auto mb-6">Tim agen profesional kami sedang dalam proses seleksi.</p>
-                <a href="#kontak" class="inline-flex items-center px-5 py-2.5 bg-takaful-green text-white font-medium rounded-lg hover:bg-takaful-darkGreen transition-all duration-300">
+                <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-2">Belum ada agen tersedia</h3>
+                <p class="text-gray-600 mb-6 text-sm md:text-base px-4">Tim agen profesional kami sedang dalam proses seleksi.</p>
+                <a href="#kontak" class="inline-flex items-center px-5 py-2.5 bg-takaful-blue text-white font-medium rounded-lg hover:bg-takaful-darkBlue transition-all duration-300 shadow-lg hover:shadow-xl">
                     <i class="fas fa-phone-alt mr-2"></i>Hubungi Kami
                 </a>
             </div>
         @endif
     </div>
 </section>
-
     <!-- Tentang Section -->
     <section id="tentang" class="py-16 bg-white">
         <div class="section-container">
