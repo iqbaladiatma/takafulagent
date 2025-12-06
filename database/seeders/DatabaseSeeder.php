@@ -14,11 +14,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Buat Admin User
+        // Buat Admin User untuk Filament
         User::create([
             'name' => 'Admin Takaful',
             'email' => 'admin@takaful.com',
             'password' => Hash::make('admin123'),
+            'role' => 'admin',
+        ]);
+
+        // Buat User biasa untuk testing
+        User::create([
+            'name' => 'User Takaful',
+            'email' => 'user@takaful.com',
+            'password' => Hash::make('user123'),
+            'role' => 'user',
         ]);
 
         // Buat Sample Agen untuk testing
