@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <img src="{{ asset('images/takaful-logo.svg') }}" alt="Takaful Keluarga" class="h-10">
+                        <img src="{{ asset('images/logo-takaful.png') }}" alt="Takaful Keluarga" class="h-10">
                     </a>
                 </div>
 
