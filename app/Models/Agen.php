@@ -26,8 +26,6 @@ class Agen extends Model
     ];
 
     /**
-<<<<<<< HEAD
-=======
      * Relasi ke Products
      */
     public function products()
@@ -62,7 +60,6 @@ class Agen extends Model
     }
 
     /**
->>>>>>> 0dab6f0 (menambahkan bacground di foto porfilenya di setiap agentnya)
      * Generate WhatsApp link otomatis dari nomor telepon
      */
     public function getWaLinkAttribute($value)
