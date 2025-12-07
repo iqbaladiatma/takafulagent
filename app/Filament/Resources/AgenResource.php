@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\AgenResource\Pages;
 use App\Models\Agen;
+use App\Models\Product;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -140,6 +141,58 @@ class AgenResource extends Resource
                             ->label('Pencapaian / Pengalaman')
                             ->helperText('Opsional: Prestasi atau pengalaman agen'),
                     ]),
+
+                Forms\Components\Section::make('Produk Agen')
+                    ->schema([
+                        Forms\Components\Repeater::make('products')
+                            ->relationship()
+                            ->schema([
+                                Forms\Components\TextInput::make('judul')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->label('Judul Produk')
+                                    ->placeholder('Contoh: Asuransi Jiwa Syariah')
+                                    ->columnSpan(2),
+
+                                Forms\Components\FileUpload::make('gambar')
+                                    ->image()
+                                    ->directory('product-images')
+                                    ->imageEditor()
+                                    ->maxSize(2048)
+                                    ->label('Gambar Produk')
+                                    ->helperText('Upload gambar produk (max 2MB)')
+                                    ->columnSpan(2),
+
+                                Forms\Components\Textarea::make('deskripsi')
+                                    ->rows(3)
+                                    ->maxLength(500)
+                                    ->label('Deskripsi Produk')
+                                    ->helperText('Deskripsi singkat tentang produk')
+                                    ->columnSpan(2),
+
+                                Forms\Components\TextInput::make('urutan')
+                                    ->numeric()
+                                    ->default(0)
+                                    ->label('Urutan Tampil')
+                                    ->helperText('Angka lebih kecil tampil lebih dulu')
+                                    ->columnSpan(2),
+                            ])
+                            ->columns(2)
+                            ->defaultItems(0)
+                            ->addActionLabel('+ Tambah Produk')
+                            ->reorderable()
+                            ->collapsible()
+                            ->collapsed()
+                            ->itemLabel(fn (array $state): ?string => $state['judul'] ?? 'Produk Baru')
+                            ->cloneable()
+                            ->deleteAction(
+                                fn ($action) => $action->requiresConfirmation()
+                            ),
+                    ])
+                    ->description('Tambahkan produk-produk yang ditawarkan oleh agen ini. Klik "Tambah Produk" untuk menambahkan produk baru.')
+                    ->collapsible()
+                    ->collapsed(false)
+                    ->icon('heroicon-o-shopping-bag'),
             ]);
     }
 
