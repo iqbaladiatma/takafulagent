@@ -75,7 +75,7 @@ class AgenResource extends Resource
                     ])
                     ->columns(2),
 
-                Forms\Components\Section::make('Foto Profil')
+                Forms\Components\Section::make('Foto Profil & Background')
                     ->schema([
                         Forms\Components\FileUpload::make('foto')
                             ->image()
@@ -85,9 +85,46 @@ class AgenResource extends Resource
                                 '1:1',
                             ])
                             ->maxSize(2048)
-                            ->label('Foto Agen')
-                            ->helperText('Upload foto profil agen (max 2MB, rasio 1:1)'),
-                    ]),
+                            ->label('Foto Profil')
+                            ->helperText('Upload foto profil agen (max 2MB, rasio 1:1)')
+                            ->columnSpan(1),
+
+                        Forms\Components\Select::make('background_type')
+                            ->label('Tipe Background')
+                            ->options([
+                                'gradient' => 'Gradient (Pilihan Warna)',
+                                'image' => 'Upload Gambar Custom',
+                            ])
+                            ->default('gradient')
+                            ->reactive()
+                            ->columnSpan(1),
+
+                        Forms\Components\Select::make('background_value')
+                            ->label('Pilih Gradient')
+                            ->options([
+                                'blue-green' => '🔵 Biru → Hijau (Default)',
+                                'blue-purple' => '🔵 Biru → Ungu',
+                                'green-teal' => '🟢 Hijau → Teal',
+                                'orange-red' => '🟠 Orange → Merah',
+                                'pink-purple' => '🌸 Pink → Ungu',
+                                'yellow-orange' => '🟡 Kuning → Orange',
+                            ])
+                            ->default('blue-green')
+                            ->visible(fn ($get) => $get('background_type') === 'gradient')
+                            ->columnSpan(1),
+
+                        Forms\Components\FileUpload::make('background_image')
+                            ->image()
+                            ->directory('agen-backgrounds')
+                            ->imageEditor()
+                            ->maxSize(3072)
+                            ->label('Upload Background Image')
+                            ->helperText('Upload gambar background (max 3MB, recommended 1200x400px)')
+                            ->visible(fn ($get) => $get('background_type') === 'image')
+                            ->columnSpan(2),
+                    ])
+                    ->columns(2)
+                    ->description('Upload foto profil dan pilih background untuk halaman profil agen'),
 
                 Forms\Components\Section::make('Deskripsi & Pencapaian')
                     ->schema([
