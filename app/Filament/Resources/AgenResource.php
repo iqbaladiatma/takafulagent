@@ -142,54 +142,108 @@ class AgenResource extends Resource
                             ->helperText('Opsional: Prestasi atau pengalaman agen'),
                     ]),
 
+                Forms\Components\Section::make('Statistik & Layanan')
+                    ->schema([
+                        Forms\Components\TextInput::make('tahun_pengalaman')
+                            ->label('Tahun Pengalaman')
+                            ->default('5+')
+                            ->maxLength(50)
+                            ->helperText('Contoh: 5+, 10+, 15 Tahun')
+                            ->columnSpan(1),
+
+                        Forms\Components\TextInput::make('klien_terlayani')
+                            ->label('Klien Terlayani')
+                            ->default('100+')
+                            ->maxLength(50)
+                            ->helperText('Contoh: 100+, 500+, 1000+')
+                            ->columnSpan(1),
+
+                        Forms\Components\TagsInput::make('layanan_unggulan')
+                            ->label('Layanan Unggulan')
+                            ->placeholder('Ketik layanan dan tekan Enter')
+                            ->helperText('Tambahkan layanan unggulan yang ditawarkan agen')
+                            ->default([
+                                'Konsultasi Asuransi Syariah Gratis',
+                                'Proses Klaim Cepat & Mudah',
+                                'Pelayanan 24/7 via WhatsApp'
+                            ])
+                            ->columnSpan(2),
+                    ])
+                    ->columns(2)
+                    ->description('Atur statistik dan layanan unggulan yang akan ditampilkan di halaman profil agen'),
+
                 Forms\Components\Section::make('Produk Agen')
                     ->schema([
-                        Forms\Components\Repeater::make('products')
-                            ->relationship()
-                            ->schema([
-                                Forms\Components\TextInput::make('judul')
-                                    ->required()
-                                    ->maxLength(255)
-                                    ->label('Judul Produk')
-                                    ->placeholder('Contoh: Asuransi Jiwa Syariah')
-                                    ->columnSpan(2),
+                        Forms\Components\CheckboxList::make('product_ids')
+                            ->label('Pilih Produk untuk Agen Ini')
+                            ->options(function ($record) {
+                                $query = Product::query();
+                                
+                                if ($record) {
+                                    // For edit: show unassigned products + products owned by this agent
+                                    $query->where(function ($q) use ($record) {
+                                        $q->whereNull('agen_id')
+                                          ->orWhere('agen_id', $record->id);
+                                    });
+                                } else {
+                                    // For create: show only unassigned products
+                                    $query->whereNull('agen_id');
+                                }
+                                
+                                return $query->pluck('judul', 'id')->toArray();
+                            })
+                            ->descriptions(function ($record) {
+                                $query = Product::query();
+                                
+                                if ($record) {
+                                    $query->where(function ($q) use ($record) {
+                                        $q->whereNull('agen_id')
+                                          ->orWhere('agen_id', $record->id);
+                                    });
+                                } else {
+                                    $query->whereNull('agen_id');
+                                }
+                                
+                                return $query->get()
+                                    ->pluck('deskripsi', 'id')
+                                    ->map(fn($desc) => $desc ? \Str::limit($desc, 80) : 'Tidak ada deskripsi')
+                                    ->toArray();
+                            })
+                            ->columns(1)
+                            ->searchable()
+                            ->bulkToggleable()
+                            ->helperText('Pilih produk yang akan ditawarkan oleh agen ini. Hanya produk yang belum dimiliki agen lain yang ditampilkan.')
+                            ->afterStateHydrated(function (Forms\Components\CheckboxList $component, $state, $record) {
+                                if ($record) {
+                                    $component->state($record->products->pluck('id')->toArray());
+                                }
+                            }),
 
-                                Forms\Components\FileUpload::make('gambar')
-                                    ->image()
-                                    ->directory('product-images')
-                                    ->imageEditor()
-                                    ->maxSize(2048)
-                                    ->label('Gambar Produk')
-                                    ->helperText('Upload gambar produk (max 2MB)')
-                                    ->columnSpan(2),
+                        Forms\Components\Placeholder::make('current_products')
+                            ->label('Produk Saat Ini')
+                            ->content(function ($record) {
+                                if (!$record || !$record->products->count()) {
+                                    return 'Belum ada produk yang dipilih.';
+                                }
+                                
+                                return $record->products->map(function ($product) {
+                                    return "• {$product->judul}" . ($product->deskripsi ? " - " . \Str::limit($product->deskripsi, 50) : '');
+                                })->join("\n");
+                            })
+                            ->visible(fn ($record) => $record && $record->products->count() > 0),
 
-                                Forms\Components\Textarea::make('deskripsi')
-                                    ->rows(3)
-                                    ->maxLength(500)
-                                    ->label('Deskripsi Produk')
-                                    ->helperText('Deskripsi singkat tentang produk')
-                                    ->columnSpan(2),
-
-                                Forms\Components\TextInput::make('urutan')
-                                    ->numeric()
-                                    ->default(0)
-                                    ->label('Urutan Tampil')
-                                    ->helperText('Angka lebih kecil tampil lebih dulu')
-                                    ->columnSpan(2),
-                            ])
-                            ->columns(2)
-                            ->defaultItems(0)
-                            ->addActionLabel('+ Tambah Produk')
-                            ->reorderable()
-                            ->collapsible()
-                            ->collapsed()
-                            ->itemLabel(fn (array $state): ?string => $state['judul'] ?? 'Produk Baru')
-                            ->cloneable()
-                            ->deleteAction(
-                                fn ($action) => $action->requiresConfirmation()
-                            ),
+                        Forms\Components\Actions::make([
+                            Forms\Components\Actions\Action::make('manage_products')
+                                ->label('Kelola Produk Master')
+                                ->icon('heroicon-o-cog-6-tooth')
+                                ->color('info')
+                                ->url('/admin/products')
+                                ->openUrlInNewTab()
+                                ->tooltip('Buka halaman Kelola Produk untuk menambah produk baru'),
+                        ])
+                        ->alignCenter(),
                     ])
-                    ->description('Tambahkan produk-produk yang ditawarkan oleh agen ini. Klik "Tambah Produk" untuk menambahkan produk baru.')
+                    ->description('Pilih produk dari daftar produk master yang akan ditawarkan oleh agen ini. Jika produk yang diinginkan belum ada, tambahkan dulu di halaman Kelola Produk.')
                     ->collapsible()
                     ->collapsed(false)
                     ->icon('heroicon-o-shopping-bag'),
@@ -228,11 +282,20 @@ class AgenResource extends Resource
                     ->copyMessage('Nomor telepon disalin!')
                     ->label('Telepon'),
 
+                Tables\Columns\TextColumn::make('products_count')
+                    ->counts('products')
+                    ->label('Produk')
+                    ->badge()
+                    ->color('primary')
+                    ->tooltip('Jumlah produk yang dimiliki agen'),
+
                 Tables\Columns\TextColumn::make('deskripsi')
                     ->limit(50)
                     ->tooltip(fn (Agen $record): ?string => $record->deskripsi)
                     ->label('Deskripsi')
                     ->toggleable(),
+
+
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('d M Y, H:i')
@@ -255,6 +318,15 @@ class AgenResource extends Resource
             ->filtersLayout(Tables\Enums\FiltersLayout::AboveContent)
             ->actions([
                 Tables\Actions\ActionGroup::make([
+                    Tables\Actions\Action::make('view_products')
+                        ->label(fn (Agen $record): string => 'Lihat Produk (' . $record->products->count() . ')')
+                        ->icon('heroicon-o-shopping-bag')
+                        ->color('primary')
+                        ->modalHeading(fn (Agen $record): string => 'Produk ' . $record->nama)
+                        ->modalContent(fn (Agen $record): \Illuminate\Contracts\View\View => view('filament.modals.agen-products', ['agen' => $record]))
+                        ->modalSubmitAction(false)
+                        ->modalCancelActionLabel('Tutup')
+                        ->visible(fn (Agen $record): bool => $record->products->count() > 0),
                     Tables\Actions\Action::make('view')
                         ->label('Lihat Halaman')
                         ->icon('heroicon-o-eye')

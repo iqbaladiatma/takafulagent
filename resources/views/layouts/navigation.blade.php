@@ -25,6 +25,10 @@
                         <a href="{{ url('/admin') }}" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-green-600 text-white rounded-lg hover:shadow-lg transition-all duration-300 font-medium text-sm">
                             <i class="fas fa-shield-halved mr-2"></i>{{ __('Panel Admin') }}
                         </a>
+                    @elseif(Auth::user()->isAgent())
+                        <a href="{{ route('agent.dashboard') }}" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg hover:shadow-lg transition-all duration-300 font-medium text-sm">
+                            <i class="fas fa-user-tie mr-2"></i>{{ __('Dashboard Agen') }}
+                        </a>
                     @endif
                 </div>
             </div>
@@ -45,13 +49,21 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <!-- Admin Badge -->
+                        <!-- Role Badge -->
                         @if(Auth::user()->isAdmin())
                             <div class="px-4 py-2 bg-gradient-to-r from-blue-600 to-green-600 text-white text-xs font-bold">
                                 <i class="fas fa-crown mr-1"></i>ADMINISTRATOR
                             </div>
                             <x-dropdown-link :href="url('/admin')">
                                 <i class="fas fa-shield-halved mr-2"></i>{{ __('Panel Admin') }}
+                            </x-dropdown-link>
+                            <div class="border-t border-gray-100"></div>
+                        @elseif(Auth::user()->isAgent())
+                            <div class="px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-bold">
+                                <i class="fas fa-user-tie mr-1"></i>AGEN
+                            </div>
+                            <x-dropdown-link :href="route('agent.dashboard')">
+                                <i class="fas fa-user-tie mr-2"></i>{{ __('Dashboard Agen') }}
                             </x-dropdown-link>
                             <div class="border-t border-gray-100"></div>
                         @endif
@@ -99,6 +111,10 @@
             @if(Auth::user()->isAdmin())
                 <x-responsive-nav-link :href="url('/admin')" class="bg-gradient-to-r from-blue-600 to-green-600 text-white">
                     <i class="fas fa-shield-halved mr-2"></i>{{ __('Panel Admin') }}
+                </x-responsive-nav-link>
+            @elseif(Auth::user()->isAgent())
+                <x-responsive-nav-link :href="route('agent.dashboard')" class="bg-gradient-to-r from-orange-500 to-red-500 text-white">
+                    <i class="fas fa-user-tie mr-2"></i>{{ __('Dashboard Agen') }}
                 </x-responsive-nav-link>
             @endif
         </div>

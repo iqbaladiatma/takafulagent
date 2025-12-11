@@ -12,6 +12,7 @@ class Agen extends Model
     protected $table = 'agens';
 
     protected $fillable = [
+        'user_id',
         'nama',
         'kode_agen',
         'telepon',
@@ -23,7 +24,18 @@ class Agen extends Model
         'deskripsi',
         'role',
         'pencapaian',
+        'tahun_pengalaman',
+        'klien_terlayani',
+        'layanan_unggulan',
     ];
+
+    /**
+     * Relasi ke User
+     */
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class);
+    }
 
     /**
      * Relasi ke Products
@@ -31,6 +43,45 @@ class Agen extends Model
     public function products()
     {
         return $this->hasMany(Product::class)->orderBy('urutan');
+    }
+
+    /**
+     * Relasi ke ProfileVisits
+     */
+    public function profileVisits()
+    {
+        return $this->hasMany(ProfileVisit::class);
+    }
+
+    /**
+     * Relasi ke ChangeRequests
+     */
+    public function changeRequests()
+    {
+        return $this->hasMany(ChangeRequest::class);
+    }
+
+    /**
+     * Cast attributes
+     */
+    protected $casts = [
+        'layanan_unggulan' => 'array',
+    ];
+
+    /**
+     * Get default layanan unggulan
+     */
+    public function getLayananUnggulanAttribute($value)
+    {
+        if ($value) {
+            return json_decode($value, true);
+        }
+        
+        return [
+            'Konsultasi Asuransi Syariah Gratis',
+            'Proses Klaim Cepat & Mudah',
+            'Pelayanan 24/7 via WhatsApp'
+        ];
     }
 
     /**

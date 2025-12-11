@@ -34,7 +34,15 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        return $this->role === 'admin'; // Hanya admin yang bisa akses panel
+        if ($panel->getId() === 'admin') {
+            return $this->role === 'admin';
+        }
+        
+        if ($panel->getId() === 'agent') {
+            return $this->role === 'agent';
+        }
+        
+        return false;
     }
 
     public function isAdmin(): bool
@@ -45,5 +53,18 @@ class User extends Authenticatable implements FilamentUser
     public function isUser(): bool
     {
         return $this->role === 'user';
+    }
+
+    public function isAgent(): bool
+    {
+        return $this->role === 'agent';
+    }
+
+    /**
+     * Relasi ke Agen
+     */
+    public function agen()
+    {
+        return $this->hasOne(\App\Models\Agen::class, 'user_id');
     }
 }

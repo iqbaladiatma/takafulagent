@@ -9,6 +9,11 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
+        // Redirect agent to their dashboard
+        if (auth()->check() && auth()->user()->isAgent()) {
+            return redirect()->route('agent.dashboard');
+        }
+
         $query = Agen::query();
 
         // Search functionality

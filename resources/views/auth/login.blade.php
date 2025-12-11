@@ -184,20 +184,34 @@
                 </div>
             </div>
             
-            <!-- Register Link -->
+            <!-- Register Link - Only show if registration is enabled -->
+            @if(config('registration.enabled', false))
             <div class="text-center">
                 <a href="{{ route('register') }}" class="inline-flex items-center justify-center w-full border-2 border-takaful-green text-takaful-green font-bold py-3.5 px-4 rounded-lg hover:bg-takaful-lightGreen transition-all duration-300">
                     <i class="fas fa-user-plus mr-3"></i>
                     <span>Daftar Akun Baru</span>
                 </a>
-                
-                <!-- Back to Home -->
-                <div class="mt-6">
-                    <a href="{{ route('home') }}" class="inline-flex items-center text-gray-600 hover:text-takaful-blue transition-colors duration-300">
-                        <i class="fas fa-arrow-left mr-2"></i>
-                        <span>Kembali ke Beranda</span>
-                    </a>
+            </div>
+            @else
+            <div class="text-center">
+                <div class="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                    <p class="text-sm text-gray-600">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        Pendaftaran akun baru saat ini dinonaktifkan.
+                    </p>
+                    <p class="text-xs text-gray-500 mt-1">
+                        Hubungi administrator untuk mendapatkan akses.
+                    </p>
                 </div>
+            </div>
+            @endif
+            
+            <!-- Back to Home -->
+            <div class="mt-6 text-center">
+                <a href="{{ route('home') }}" class="inline-flex items-center text-gray-600 hover:text-takaful-blue transition-colors duration-300">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    <span>Kembali ke Beranda</span>
+                </a>
             </div>
         </div>
         

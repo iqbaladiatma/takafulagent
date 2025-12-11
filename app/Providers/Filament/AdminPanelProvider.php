@@ -7,6 +7,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -27,7 +28,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            // ->login()
+            ->login()
             ->brandName('Takaful Admin Panel')
             ->brandLogo(asset('images/takaful-logo.svg'))
             ->brandLogoHeight('2.5rem')
@@ -66,10 +67,34 @@ class AdminPanelProvider extends PanelProvider
             ->font('Poppins')
             ->maxContentWidth('full')
             ->sidebarCollapsibleOnDesktop()
-            ->viteTheme('resources/css/filament/admin/theme.css')
+            // ->viteTheme('resources/css/filament/admin/theme.css')
+            ->spa()
             ->navigationGroups([
                 'Manajemen Agen',
+                'Manajemen Produk',
+                'Laporan',
                 'Pengaturan',
+                'Website',
+            ])
+            ->navigationItems([
+                NavigationItem::make('Kembali ke Website')
+                    ->url(route('home'))
+                    ->icon('heroicon-o-arrow-left-on-rectangle')
+                    ->openUrlInNewTab()
+                    ->sort(999)
+                    ->group('Website'),
+                NavigationItem::make('Dashboard User')
+                    ->url(route('dashboard'))
+                    ->icon('heroicon-o-squares-2x2')
+                    ->openUrlInNewTab()
+                    ->sort(998)
+                    ->group('Website'),
+                NavigationItem::make('Daftar Agen Public')
+                    ->url(route('agen.index'))
+                    ->icon('heroicon-o-users')
+                    ->openUrlInNewTab()
+                    ->sort(997)
+                    ->group('Website'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
@@ -95,6 +120,11 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
                 AdminMiddleware::class,
-            ]);
+            ])
+            ->renderHook(
+                'panels::topbar.end',
+                fn () => view('filament.admin.components.topbar-actions')
+            )
+            ->spa();
     }
 }

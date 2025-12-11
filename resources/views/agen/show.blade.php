@@ -103,17 +103,17 @@
                 </div>
 
                 <!-- DETAIL DI KANAN FOTO -->
-                <div class="pt-4 sm:pt-6 md:pt-8 flex-1">
-                    <h1 class="text-xl md:text-2xl lg:text-3xl font-bold text-gray-800 mb-1">
+                <div class="pt-4 sm:pt-6 md:pt-8 flex-1 relative z-10">
+                    <h1 class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-1 relative z-20">
                         {{ $agen->nama }}
                     </h1>
 
-                    <p class="text-takaful-blue font-semibold text-base md:text-lg mb-2">
+                    <p class="text-takaful-blue font-semibold text-base md:text-lg mb-2 relative z-20">
                         {{ $agen->role }}
                     </p>
 
                     <!-- BADGE KODE AGEN -->
-                    <div class="inline-flex items-center bg-takaful-lightBlue text-takaful-blue px-4 py-2 rounded-full text-sm md:text-base font-bold border border-takaful-blue/30">
+                    <div class="inline-flex items-center bg-takaful-lightBlue text-takaful-blue px-4 py-2 rounded-full text-sm md:text-base font-bold border border-takaful-blue/30 relative z-20">
                         <i class="fas fa-id-badge mr-2"></i>
                         <span>{{ $agen->kode_agen }}</span>
                     </div>

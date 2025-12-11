@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $agen->nama }} - Agen Takaful Indonesia</title>
+    <meta name="description" content="Profil {{ $agen->nama }}, {{ $agen->role }} di Takaful Indonesia. Hubungi untuk konsultasi asuransi syariah terpercaya.">
+    <meta name="keywords" content="takaful, asuransi syariah, {{ $agen->nama }}, {{ $agen->kode_agen }}">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="{{ $agen->nama }} - Agen Takaful Indonesia">
+    <meta property="og:description" content="{{ $agen->deskripsi ?: 'Agen Takaful Indonesia yang siap membantu kebutuhan asuransi syariah Anda.' }}">
+    <meta property="og:image" content="{{ $agen->foto ? asset('storage/'.$agen->foto) : 'https://ui-avatars.com/api/?name=' . urlencode($agen->nama) . '&background=1D76BB&color=fff&size=400' }}">
+    <meta property="og:type" content="profile">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        takaful: {
+                            blue: '#1D76BB',
+                            green: '#008542',
+                            light: '#E8F5F1',
+                            lightBlue: '#E6F2FF',
+                            lightGreen: '#E8F5F0',
+                            darkGreen: '#006B37',
+                            darkBlue: '#004A99'
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'bounce-gentle': 'bounceGentle 2s infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        bounceGentle: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-5px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #1D76BB 0%, #008542 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .line-clamp-2 {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+        .line-clamp-3 {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+        }
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .pulse-ring {
+            animation: pulse-ring 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 1; }
+            80%, 100% { transform: scale(1.2); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 via-blue-50/30 to-green-50/30 min-h-screen">
+
+<!-- Floating Background Elements -->
+<div class="fixed inset-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-20 left-10 w-32 h-32 bg-takaful-blue/5 rounded-full floating"></div>
+    <div class="absolute top-40 right-20 w-24 h-24 bg-takaful-green/5 rounded-full floating" style="animation-delay: -1s;"></div>
+    <div class="absolute bottom-40 left-1/4 w-20 h-20 bg-takaful-blue/5 rounded-full floating" style="animation-delay: -2s;"></div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8 relative z-10">
+
+    <!-- BACK BUTTON -->
+    <div class="animate-fade-in">
+        <a href="{{ route('home') }}"
+           class="inline-flex items-center mb-6 md:mb-8 glass-effect border border-white/20 px-6 py-3 rounded-xl text-gray-700 hover:shadow-lg hover:border-takaful-blue/30 transition-all duration-300 hover-lift group">
+            <i class="fas fa-arrow-left mr-3 group-hover:-translate-x-1 transition-transform duration-300"></i>
+            <span class="font-medium">Kembali ke Beranda</span>
+        </a>
+    </div>
+
+    <!-- MAIN CARD PROFILE -->
+    <div class="animate-slide-up bg-white/80 backdrop-blur-sm rounded-2xl md:rounded-3xl shadow-xl border border-white/20 overflow-hidden mb-8 md:mb-10 hover-lift">
+
+        <!-- HEADER BACKGROUND BANNER -->
+        <div class="relative h-40 sm:h-48 md:h-56 lg:h-64 overflow-hidden" style="{{ $agen->background_style }}">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+            
+            <!-- Animated Particles -->
+            <div class="absolute inset-0">
+                <div class="absolute top-10 left-10 w-2 h-2 bg-white/30 rounded-full animate-bounce-gentle"></div>
+                <div class="absolute top-20 right-20 w-1 h-1 bg-white/40 rounded-full animate-bounce-gentle" style="animation-delay: -0.5s;"></div>
+                <div class="absolute bottom-20 left-1/3 w-1.5 h-1.5 bg-white/20 rounded-full animate-bounce-gentle" style="animation-delay: -1s;"></div>
+            </div>
+
+            <!-- Decorative Pattern -->
+            <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.6&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+        </div>
+
+        <!-- PROFILE CONTENT -->
+        <div class="px-6 sm:px-8 md:px-10 pb-8">
+
+            <!-- FOTO + DETAIL DALAM 1 ROW -->
+            <div class="flex items-start gap-6 sm:gap-8 -mt-16 sm:-mt-18 md:-mt-20">
+
+                <!-- FOTO PROFIL DI KIRI -->
+                <div class="relative group">
+                    <div class="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full border-4 border-white shadow-2xl overflow-hidden bg-white ring-4 ring-white/50 group-hover:ring-takaful-blue/20 transition-all duration-300">
+                        <img
+                            src="{{ $agen->foto ? asset('storage/'.$agen->foto) : 'https://ui-avatars.com/api/?name=' . urlencode($agen->nama) . '&background=1D76BB&color=fff&size=400' }}"
+                            alt="{{ $agen->nama }}"
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                            onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode($agen->nama) }}&background=1D76BB&color=fff&size=400'"
+                        />
+                    </div>
+
+                    <!-- Online Indicator with Pulse -->
+                    <div class="absolute bottom-2 right-2">
+                        <div class="w-6 h-6 sm:w-7 sm:h-7 bg-green-500 rounded-full border-3 border-white shadow-lg relative">
+                            <div class="absolute inset-0 bg-green-500 rounded-full pulse-ring"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Verified Badge -->
+                    <div class="absolute -top-2 -right-2 bg-takaful-blue text-white rounded-full p-2 shadow-lg">
+                        <i class="fas fa-check text-xs"></i>
+                    </div>
+                </div>
+
+                <!-- DETAIL DI KANAN FOTO -->
+                <div class="pt-6 sm:pt-8 md:pt-10 flex-1">
+                    <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold gradient-text mb-2">
+                        {{ $agen->nama }}
+                    </h1>
+
+                    <p class="text-takaful-blue font-semibold text-lg md:text-xl mb-4">
+                        {{ $agen->role }}
+                    </p>
+
+                    <!-- BADGE KODE AGEN -->
+                    <div class="inline-flex items-center bg-gradient-to-r from-takaful-lightBlue to-blue-50 text-takaful-blue px-6 py-3 rounded-full text-sm md:text-base font-bold border border-takaful-blue/30 shadow-sm hover:shadow-md transition-all duration-300">
+                        <i class="fas fa-id-badge mr-3 text-lg"></i>
+                        <span class="tracking-wide">{{ $agen->kode_agen }}</span>
+                    </div>
+                    
+                    <!-- Trust Indicators -->
+                    <div class="flex items-center gap-4 mt-4">
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-shield-alt text-takaful-green mr-2"></i>
+                            <span>Terverifikasi</span>
+                        </div>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-star text-yellow-500 mr-2"></i>
+                            <span>Agen Terpercaya</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTACT INFO -->
+            <div class="mt-8 sm:mt-10">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Telepon -->
+                    <div class="bg-gradient-to-r from-gray-50 to-blue-50/50 p-6 rounded-2xl border border-gray-200/50 hover:border-takaful-blue/30 transition-all duration-300 hover-lift">
+                        <div class="flex items-center">
+                            <div class="bg-gradient-to-r from-takaful-blue to-takaful-darkBlue p-3 rounded-xl mr-4 shadow-lg">
+                                <i class="fas fa-phone text-white text-lg"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="font-semibold text-gray-700 text-sm mb-1">Hubungi Langsung</p>
+                                <p class="text-gray-800 font-bold text-lg">{{ $agen->telepon }}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- WhatsApp -->
+                    <div class="sm:col-span-1">
+                        <a href="{{ $agen->wa_link }}" target="_blank"
+                           class="block bg-gradient-to-r from-takaful-green to-takaful-darkGreen hover:from-takaful-darkGreen hover:to-green-700 text-white py-6 px-6 rounded-2xl font-bold text-center transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 group">
+                            <i class="fab fa-whatsapp mr-3 text-xl group-hover:animate-bounce-gentle"></i>
+                            <span class="text-lg">Chat via WhatsApp</span>
+                            <div class="text-sm opacity-90 mt-1">Respon cepat & gratis</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GRID LAYOUT -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-10">
+
+        <!-- LEFT COLUMN -->
+        <div class="lg:col-span-2 space-y-8 md:space-y-10">
+
+            <!-- ABOUT SECTION -->
+            @if($agen->deskripsi)
+            <div class="animate-fade-in bg-white/80 backdrop-blur-sm p-6 sm:p-8 md:p-10 rounded-2xl md:rounded-3xl shadow-lg border border-white/20 hover-lift">
+                <div class="flex items-center mb-6 md:mb-8">
+                    <div class="bg-gradient-to-r from-takaful-blue to-takaful-darkBlue p-4 rounded-xl mr-5 shadow-lg">
+                        <i class="fas fa-user text-white text-xl"></i>
+                    </div>
+                    <h2 class="font-bold text-xl md:text-2xl gradient-text">Tentang Saya</h2>
+                </div>
+
+                <div class="relative">
+                    <div id="about-text" class="text-gray-700 leading-relaxed text-base md:text-lg overflow-hidden max-h-24 transition-all duration-300">
+                        {{ $agen->deskripsi }}
+                    </div>
+
+                    @if(strlen($agen->deskripsi) > 300)
+                    <div class="mt-6">
+                        <button onclick="toggleText('about')" 
+                            id="about-toggle"
+                            class="font-semibold text-sm inline-flex items-center px-4 py-2 bg-takaful-green/10 hover:bg-takaful-green/20 text-takaful-green rounded-full transition-all duration-300 hover:scale-105">
+                            Lihat Selengkapnya
+                            <i class="fas fa-chevron-down ml-2 text-xs"></i>
+                        </button>
+                    </div>
+                    @endif
+                </div>
+            </div>
+            @endif
+
+            <!-- ACHIEVEMENTS SECTION -->
+            @if($agen->pencapaian)
+            <div class="bg-white p-5 sm:p-6 md:p-8 rounded-xl md:rounded-2xl shadow-sm border border-gray-100">
+                <div class="flex items-center mb-4 md:mb-6">
+                    <div class="bg-takaful-lightBlue p-3 rounded-lg mr-4">
+                        <i class="fas fa-trophy text-takaful-blue text-lg"></i>
+                    </div>
+                    <h2 class="font-bold text-lg md:text-xl text-gray-800">Pencapaian</h2>
+                </div>
+                <div class="relative">
+                    <div id="achievement-text" class="text-gray-700 leading-relaxed text-sm md:text-base overflow-hidden max-h-24 transition-all duration-300">
+                        {{ $agen->pencapaian }}
+                    </div>
+                    @if(strlen($agen->pencapaian) > 300)
+                    <div class="mt-4">
+                        <button onclick="toggleText('achievement')" 
+                                id="achievement-toggle" 
+                                class="font-semibold text-sm inline-flex items-center transition-colors"
+                                style="color: #8CC63F;">
+                            Lihat Selengkapnya
+                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                    </div>
+                    @endif
+                </div>
+            </div>
+            @endif
+
+            <!-- PRODUCTS SECTION -->
+            @if($agen->products && $agen->products->count() > 0)
+            <div class="animate-fade-in bg-white/80 backdrop-blur-sm p-6 sm:p-8 md:p-10 rounded-2xl md:rounded-3xl shadow-lg border border-white/20 hover-lift">
+                <div class="flex items-center justify-between mb-8 md:mb-10">
+                    <div class="flex items-center">
+                        <div class="bg-gradient-to-r from-takaful-green to-takaful-darkGreen p-4 rounded-xl mr-5 shadow-lg">
+                            <i class="fas fa-shopping-bag text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="font-bold text-xl md:text-2xl gradient-text">Produk Unggulan</h2>
+                            <p class="text-gray-600 text-sm mt-1">{{ $agen->products->count() }} produk tersedia</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                    @foreach($agen->products as $product)
+                    <div class="group bg-white/90 backdrop-blur-sm border border-gray-200/50 rounded-2xl overflow-hidden hover:border-takaful-blue/50 hover:shadow-xl transition-all duration-300 h-full flex flex-col hover-lift">
+                        <!-- Product Image -->
+                        <div class="relative h-48 sm:h-52 bg-gradient-to-br from-takaful-lightBlue via-blue-50 to-takaful-lightGreen overflow-hidden">
+                            @if($product->gambar)
+                                <img 
+                                    src="{{ asset('storage/' . $product->gambar) }}" 
+                                    alt="{{ $product->judul }}"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                    onerror="this.src='https://via.placeholder.com/400x300/1D76BB/FFFFFF?text={{ urlencode($product->judul) }}'"
+                                >
+                            @else
+                                <div class="w-full h-full flex items-center justify-center">
+                                    <div class="text-center">
+                                        <i class="fas fa-shopping-bag text-5xl text-takaful-blue/40 mb-2"></i>
+                                        <p class="text-takaful-blue/60 text-sm font-medium">{{ $product->judul }}</p>
+                                    </div>
+                                </div>
+                            @endif
+                            
+                            <!-- Overlay Gradient -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </div>
+
+                        <!-- Product Content -->
+                        <div class="p-5 sm:p-6 flex-1 flex flex-col">
+                            <h3 class="font-bold text-base sm:text-lg text-gray-800 mb-3 line-clamp-2 group-hover:text-takaful-blue transition-colors duration-300">
+                                {{ $product->judul }}
+                            </h3>
+                            
+                            @if($product->deskripsi)
+                                <div class="mb-4 relative">
+                                    <!-- Teks pendek (truncated) -->
+                                    <div id="product-desc-{{ $loop->index }}" class="text-gray-600 text-xs sm:text-sm line-clamp-3 product-description">
+                                        {{ $product->deskripsi }}
+                                    </div>
+                                    
+                                    <!-- Tombol "Lihat Selengkapnya" hanya muncul jika teks panjang -->
+                                    @if(strlen($product->deskripsi) > 120)
+                                    <div class="mt-2">
+                                        <button type="button" 
+                                                onclick="toggleProductDesc({{ $loop->index }})" 
+                                                id="product-toggle-{{ $loop->index }}"
+                                                class="font-medium text-xs inline-flex items-center focus:outline-none"
+                                                style="color: #8CC63F;">
+                                            Lihat Selengkapnya
+                                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                                        </button>
+                                    </div>
+                                    @endif
+                                </div>
+                            @endif
+
+                            <!-- WhatsApp Button -->
+                            <div class="mt-auto pt-4">
+                                <a href="{{ $agen->wa_link }}?text=Halo {{ $agen->nama }}, saya tertarik dengan produk {{ $product->judul }}. Mohon informasi lebih lanjut." 
+                                   target="_blank"
+                                   class="block bg-gradient-to-r from-takaful-green to-takaful-darkGreen hover:from-takaful-darkGreen hover:to-green-700 text-white py-3 sm:py-4 px-4 sm:px-5 rounded-xl font-bold text-sm sm:text-base text-center transition-all duration-300 hover:shadow-lg w-full transform hover:scale-105 group/btn">
+                                    <i class="fab fa-whatsapp mr-2 text-lg group-hover/btn:animate-bounce-gentle"></i>
+                                    <span>Konsultasi Gratis</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            @endif
+
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="lg:col-span-1 space-y-8">
+            <!-- ADDITIONAL INFO SECTION -->
+            <div class="animate-fade-in bg-white/80 backdrop-blur-sm p-6 sm:p-8 rounded-2xl md:rounded-3xl shadow-lg border border-white/20 hover-lift">
+                <div class="flex items-center mb-6 md:mb-8">
+                    <div class="bg-gradient-to-r from-takaful-blue to-takaful-darkBlue p-4 rounded-xl mr-4 shadow-lg">
+                        <i class="fas fa-chart-line text-white text-xl"></i>
+                    </div>
+                    <h2 class="font-bold text-xl gradient-text">Statistik Agen</h2>
+                </div>
+                
+                <div class="space-y-6">
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-gradient-to-br from-takaful-lightBlue via-blue-50 to-white p-5 rounded-2xl text-center border border-takaful-blue/20 hover:border-takaful-blue/40 transition-all duration-300 hover-lift">
+                            <div class="text-3xl font-bold text-takaful-blue mb-1">5+</div>
+                            <div class="text-gray-600 text-sm font-medium">Tahun Pengalaman</div>
+                        </div>
+                        <div class="bg-gradient-to-br from-takaful-lightGreen via-green-50 to-white p-5 rounded-2xl text-center border border-takaful-green/20 hover:border-takaful-green/40 transition-all duration-300 hover-lift">
+                            <div class="text-3xl font-bold text-takaful-green mb-1">100+</div>
+                            <div class="text-gray-600 text-sm font-medium">Klien Terlayani</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Info -->
+                    <div class="bg-gradient-to-br from-gray-50 to-blue-50/30 p-6 rounded-2xl border border-gray-200/50">
+                        <h3 class="font-bold text-gray-800 mb-4 text-base flex items-center">
+                            <i class="fas fa-star text-yellow-500 mr-2"></i>
+                            Layanan Unggulan
+                        </h3>
+                        <ul class="space-y-3 text-sm text-gray-700">
+                            <li class="flex items-start group">
+                                <div class="bg-takaful-green/20 p-1 rounded-full mr-3 mt-0.5 group-hover:bg-takaful-green/30 transition-colors duration-300">
+                                    <i class="fas fa-check text-takaful-green text-xs"></i>
+                                </div>
+                                <span class="group-hover:text-gray-900 transition-colors duration-300">Konsultasi Asuransi Syariah Gratis</span>
+                            </li>
+                            <li class="flex items-start group">
+                                <div class="bg-takaful-green/20 p-1 rounded-full mr-3 mt-0.5 group-hover:bg-takaful-green/30 transition-colors duration-300">
+                                    <i class="fas fa-check text-takaful-green text-xs"></i>
+                                </div>
+                                <span class="group-hover:text-gray-900 transition-colors duration-300">Proses Klaim Cepat & Mudah</span>
+                            </li>
+                            <li class="flex items-start group">
+                                <div class="bg-takaful-green/20 p-1 rounded-full mr-3 mt-0.5 group-hover:bg-takaful-green/30 transition-colors duration-300">
+                                    <i class="fas fa-check text-takaful-green text-xs"></i>
+                                </div>
+                                <span class="group-hover:text-gray-900 transition-colors duration-300">Pelayanan 24/7 via WhatsApp</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VISIT WEBSITE -->
+            <div class="bg-gradient-to-br from-takaful-blue via-takaful-darkBlue to-blue-900 p-8 rounded-2xl md:rounded-3xl shadow-xl border border-takaful-blue/20 hover-lift overflow-hidden relative">
+                <!-- Background Pattern -->
+                <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.3&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+                
+                <div class="text-center relative z-10">
+                    <div class="bg-white/20 p-4 rounded-full inline-block mb-4">
+                        <i class="fas fa-globe text-white text-3xl"></i>
+                    </div>
+                    <h3 class="font-bold text-xl md:text-2xl text-white mb-3">Website Resmi Takaful</h3>
+                    <p class="text-white/90 text-sm mb-6 leading-relaxed">
+                        Jelajahi produk asuransi syariah lengkap dan dapatkan informasi terkini
+                    </p>
+                    <a href="https://www.takaful.co.id" 
+                       target="_blank"
+                       class="inline-flex items-center bg-white text-takaful-blue font-bold py-3 px-6 rounded-xl hover:bg-gray-50 transition-all duration-300 text-sm shadow-lg hover:shadow-xl transform hover:scale-105 group">
+                        <span>Kunjungi Website</span>
+                        <i class="fas fa-external-link-alt ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Contact -->
+            <div class="bg-gradient-to-br from-takaful-green via-takaful-darkGreen to-green-700 p-8 rounded-2xl md:rounded-3xl shadow-xl border border-takaful-green/20 hover-lift">
+                <div class="text-center">
+                    <div class="bg-white/20 p-4 rounded-full inline-block mb-4">
+                        <i class="fab fa-whatsapp text-white text-3xl"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-white mb-3">Konsultasi Langsung</h3>
+                    <p class="text-white/90 text-sm mb-6">
+                        Hubungi {{ $agen->nama }} untuk konsultasi gratis
+                    </p>
+                    <a href="{{ $agen->wa_link }}" 
+                       target="_blank"
+                       class="inline-flex items-center bg-white text-takaful-green font-bold py-3 px-6 rounded-xl hover:bg-gray-50 transition-all duration-300 text-sm shadow-lg hover:shadow-xl transform hover:scale-105 group">
+                        <i class="fab fa-whatsapp mr-2 group-hover:animate-bounce-gentle"></i>
+                        <span>Chat Sekarang</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="mt-12 pt-8 border-t border-gray-200/50">
+        <div class="text-center">
+            <div class="flex justify-center items-center mb-4">
+                <div class="bg-gradient-to-r from-takaful-blue to-takaful-green p-3 rounded-full mr-3">
+                    <i class="fas fa-shield-alt text-white text-lg"></i>
+                </div>
+                <div class="text-left">
+                    <h4 class="font-bold text-gray-800">Takaful Indonesia</h4>
+                    <p class="text-gray-600 text-sm">Asuransi Syariah Terpercaya</p>
+                </div>
+            </div>
+            <p class="text-gray-600 text-sm mb-2">
+                © {{ date('Y') }} Takaful Indonesia. Semua hak dilindungi.
+            </p>
+            <p class="text-gray-500 text-xs">
+                Diawasi oleh Otoritas Jasa Keuangan (OJK)
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Fungsi untuk toggle teks about dan achievement
+    function toggleText(section) {
+        const text = document.getElementById(section + "-text");
+        const toggleButton = document.getElementById(section + "-toggle");
+
+        if (text.classList.contains("max-h-24")) {
+            // Tampilkan semua teks
+            text.classList.remove("max-h-24");
+            toggleButton.innerHTML = `Tutup <i class="fas fa-chevron-up ml-1 text-xs"></i>`;
+        } else {
+            // Sembunyikan teks panjang
+            text.classList.add("max-h-24");
+            toggleButton.innerHTML = `Lihat Selengkapnya <i class="fas fa-chevron-down ml-1 text-xs"></i>`;
+        }
+    }
+
+    // Fungsi untuk toggle teks deskripsi produk
+    function toggleProductDesc(index) {
+        const descElement = document.getElementById(`product-desc-${index}`);
+        const toggleButton = document.getElementById(`product-toggle-${index}`);
+        
+        if (descElement.classList.contains('line-clamp-3')) {
+            // Tampilkan semua teks
+            descElement.classList.remove('line-clamp-3');
+            toggleButton.innerHTML = 'Lihat Lebih Sedikit <i class="fas fa-chevron-up ml-1 text-xs"></i>';
+        } else {
+            // Sembunyikan teks panjang
+            descElement.classList.add('line-clamp-3');
+            toggleButton.innerHTML = 'Lihat Selengkapnya <i class="fas fa-chevron-down ml-1 text-xs"></i>';
+        }
+    }
+
+    // Inisialisasi: tambahkan class line-clamp-3 untuk teks panjang produk
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.product-description').forEach((desc, index) => {
+            if (desc.textContent.length > 120) {
+                desc.classList.add('line-clamp-3');
+            }
+        });
+
+        // Smooth scroll untuk anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Lazy loading untuk gambar
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.animate-fade-in, .animate-slide-up').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(el);
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -153,8 +153,8 @@
                         Beranda
                         <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-takaful-blue group-hover:w-full transition-all duration-300"></span>
                     </a>
-                    <a href="#agen" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group">
-                        Agen Kami
+                    <a href="{{ route('agen.index') }}" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group">
+                        Daftar Agen
                         <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-takaful-blue group-hover:w-full transition-all duration-300"></span>
                     </a>
                     <a href="#layanan" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group">
@@ -205,8 +205,8 @@
                     <a href="#beranda" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100">
                         <i class="fas fa-home mr-3 text-takaful-blue"></i>Beranda
                     </a>
-                    <a href="#agen" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100">
-                        <i class="fas fa-users mr-3 text-takaful-blue"></i>Agen Kami
+                    <a href="{{ route('agen.index') }}" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100">
+                        <i class="fas fa-users mr-3 text-takaful-blue"></i>Daftar Agen
                     </a>
                     <a href="#layanan" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100">
                         <i class="fas fa-concierge-bell mr-3 text-takaful-blue"></i>Layanan
@@ -263,8 +263,8 @@
                 </p>
                 
                 <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16">
-                    <a href="#agen" class="px-6 py-3.5 bg-white text-takaful-blue font-bold rounded-lg hover:bg-gray-100 transition-all duration-300 btn-hover-effect animate-slide-up shadow-lg">
-                        <i class="fas fa-users mr-3"></i>Temui Agen Kami
+                    <a href="{{ route('agen.index') }}" class="px-6 py-3.5 bg-white text-takaful-blue font-bold rounded-lg hover:bg-gray-100 transition-all duration-300 btn-hover-effect animate-slide-up shadow-lg">
+                        <i class="fas fa-users mr-3"></i>Lihat Semua Agen
                     </a>
                     <a href="{{ route('register') }}" class="px-6 py-3.5 bg-takaful-green text-white font-bold rounded-lg hover:bg-takaful-darkGreen transition-all duration-300 btn-hover-effect animate-slide-up" style="animation-delay: 0.1s">
                         <i class="fas fa-user-plus mr-3"></i>Daftar Sekarang
@@ -399,15 +399,9 @@
 
             <!-- Tombol Lihat Semua -->
             <div class="text-center mt-10 md:mt-12">
-                @auth
-                    <a href="{{ route('dashboard') }}" class="inline-flex items-center px-6 py-3 bg-takaful-blue text-white font-bold rounded-lg hover:bg-takaful-darkBlue transition-all duration-300 btn-hover-effect shadow-lg hover:shadow-xl">
-                        <i class="fas fa-th-large mr-2"></i>Lihat Semua Agen
-                    </a>
-                @else
-                    <a href="{{ route('register') }}" class="inline-flex items-center px-6 py-3 bg-takaful-blue text-white font-bold rounded-lg hover:bg-takaful-darkBlue transition-all duration-300 btn-hover-effect shadow-lg hover:shadow-xl">
-                        <i class="fas fa-user-plus mr-2"></i>Daftar untuk Lihat Semua
-                    </a>
-                @endauth
+                <a href="{{ route('agen.index') }}" class="inline-flex items-center px-6 py-3 bg-takaful-blue text-white font-bold rounded-lg hover:bg-takaful-darkBlue transition-all duration-300 btn-hover-effect shadow-lg hover:shadow-xl">
+                    <i class="fas fa-users mr-2"></i>Lihat Semua Agen
+                </a>
             </div>
         @else
             <!-- Jika tidak ada agen -->
@@ -552,8 +546,8 @@
                     <ul class="space-y-3 text-gray-400">
                         <li><a href="#beranda" class="hover:text-takaful-green transition-colors duration-300 flex items-center">
                             <i class="fas fa-chevron-right text-xs mr-2 text-takaful-blue"></i>Beranda</a></li>
-                        <li><a href="#agen" class="hover:text-takaful-green transition-colors duration-300 flex items-center">
-                            <i class="fas fa-chevron-right text-xs mr-2 text-takaful-blue"></i>Agen Kami</a></li>
+                        <li><a href="{{ route('agen.index') }}" class="hover:text-takaful-green transition-colors duration-300 flex items-center">
+                            <i class="fas fa-chevron-right text-xs mr-2 text-takaful-blue"></i>Daftar Agen</a></li>
                         <li><a href="#layanan" class="hover:text-takaful-green transition-colors duration-300 flex items-center">
                             <i class="fas fa-chevron-right text-xs mr-2 text-takaful-blue"></i>Layanan</a></li>
                         <li><a href="#tentang" class="hover:text-takaful-green transition-colors duration-300 flex items-center">
