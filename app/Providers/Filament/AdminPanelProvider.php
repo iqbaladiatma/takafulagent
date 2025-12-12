@@ -78,19 +78,19 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigationItems([
                 NavigationItem::make('Kembali ke Website')
-                    ->url(route('home'))
+                    ->url('/')
                     ->icon('heroicon-o-arrow-left-on-rectangle')
                     ->openUrlInNewTab()
                     ->sort(999)
                     ->group('Website'),
                 NavigationItem::make('Dashboard User')
-                    ->url(route('dashboard'))
+                    ->url('/dashboard')
                     ->icon('heroicon-o-squares-2x2')
                     ->openUrlInNewTab()
                     ->sort(998)
                     ->group('Website'),
                 NavigationItem::make('Daftar Agen Public')
-                    ->url(route('agen.index'))
+                    ->url('/agen')
                     ->icon('heroicon-o-users')
                     ->openUrlInNewTab()
                     ->sort(997)
