@@ -62,6 +62,111 @@
 </head>
 <body class="bg-gray-50 min-h-screen">
 
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <img src="{{ asset('images/logo-takaful.png') }}" alt="Takaful Keluarga" class="h-10 sm:h-12">
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-10">
+                    <a href="{{ route('home') }}" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group">
+                        Beranda
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-takaful-blue group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="{{ route('agen.index') }}" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group">
+                        Daftar Agen
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-takaful-blue group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="{{ route('home') }}#layanan" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group">
+                        Layanan
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-takaful-blue group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="{{ route('home') }}#tentang" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group">
+                        Tentang
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-takaful-blue group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="{{ route('home') }}#kontak" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group">
+                        Kontak
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-takaful-blue group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                </div>
+
+                <!-- Auth Buttons - Desktop -->
+                <div class="hidden md:flex items-center space-x-4">
+                    @auth
+                        @if(auth()->user()->role === 'admin')
+                            <a href="/admin" class="px-5 py-2.5 bg-takaful-blue text-white font-medium rounded-lg hover:bg-takaful-darkBlue transition-all duration-300">
+                                <i class="fas fa-user-shield mr-2"></i>Admin
+                            </a>
+                        @else
+                            <a href="{{ route('dashboard') }}" class="px-5 py-2.5 bg-takaful-green text-white font-medium rounded-lg hover:bg-takaful-darkGreen transition-all duration-300">
+                                <i class="fas fa-th-large mr-2"></i>Dashboard
+                            </a>
+                        @endif
+                    @else
+                        <a href="{{ route('login') }}" class="px-5 py-2.5 border border-takaful-blue text-takaful-blue font-medium rounded-lg hover:bg-takaful-lightBlue transition-all duration-300">
+                            Masuk
+                        </a>
+                        <a href="{{ route('register') }}" class="px-5 py-2.5 bg-takaful-green text-white font-medium rounded-lg hover:bg-takaful-darkGreen transition-all duration-300">
+                            Daftar
+                        </a>
+                    @endauth
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuButton" class="md:hidden text-gray-700 hover:text-takaful-blue">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="mobile-menu hidden md:hidden bg-white py-4 border-t border-gray-100">
+                <div class="flex flex-col space-y-4">
+                    <a href="{{ route('home') }}" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100">
+                        <i class="fas fa-home mr-3 text-takaful-blue"></i>Beranda
+                    </a>
+                    <a href="{{ route('agen.index') }}" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100">
+                        <i class="fas fa-users mr-3 text-takaful-blue"></i>Daftar Agen
+                    </a>
+                    <a href="{{ route('home') }}#layanan" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100">
+                        <i class="fas fa-concierge-bell mr-3 text-takaful-blue"></i>Layanan
+                    </a>
+                    <a href="{{ route('home') }}#tentang" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100">
+                        <i class="fas fa-info-circle mr-3 text-takaful-blue"></i>Tentang
+                    </a>
+                    <a href="{{ route('home') }}#kontak" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100">
+                        <i class="fas fa-phone-alt mr-3 text-takaful-blue"></i>Kontak
+                    </a>
+                    
+                    <div class="pt-4 space-y-3">
+                        @auth
+                            @if(auth()->user()->role === 'admin')
+                                <a href="/admin" class="block text-center px-4 py-2.5 bg-takaful-blue text-white font-medium rounded-lg hover:bg-takaful-darkBlue transition-all duration-300">
+                                    <i class="fas fa-user-shield mr-2"></i>Admin Panel
+                                </a>
+                            @else
+                                <a href="{{ route('dashboard') }}" class="block text-center px-4 py-2.5 bg-takaful-green text-white font-medium rounded-lg hover:bg-takaful-darkGreen transition-all duration-300">
+                                    <i class="fas fa-th-large mr-2"></i>Dashboard
+                                </a>
+                            @endif
+                        @else
+                            <a href="{{ route('login') }}" class="block text-center px-4 py-2.5 border border-takaful-blue text-takaful-blue font-medium rounded-lg hover:bg-takaful-lightBlue transition-all duration-300">
+                                <i class="fas fa-sign-in-alt mr-2"></i>Masuk
+                            </a>
+                            <a href="{{ route('register') }}" class="block text-center px-4 py-2.5 bg-takaful-green text-white font-medium rounded-lg hover:bg-takaful-darkGreen transition-all duration-300">
+                                <i class="fas fa-user-plus mr-2"></i>Daftar
+                            </a>
+                        @endauth
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
 <div class="max-w-6xl mx-auto px-4 sm:px-5 lg:px-6 py-6 md:py-8 container-padding">
 
     <!-- BACK BUTTON -->
@@ -416,6 +521,22 @@
                 desc.classList.add('line-clamp-3');
             }
         });
+    });
+
+    // Mobile Menu Toggle
+    document.getElementById('mobileMenuButton').addEventListener('click', function() {
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        
+        if (!mobileMenu.contains(event.target) && !mobileMenuButton.contains(event.target)) {
+            mobileMenu.classList.add('hidden');
+        }
     });
 </script>
 
