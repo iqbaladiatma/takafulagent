@@ -30,6 +30,7 @@ Route::middleware(['auth', 'verified'])->prefix('agent')->name('agent.')->group(
     Route::get('/profile', [App\Http\Controllers\Agent\AgentDashboardController::class, 'profile'])->name('profile');
     Route::get('/requests', [App\Http\Controllers\Agent\AgentDashboardController::class, 'requests'])->name('requests');
     Route::get('/requests/create', [App\Http\Controllers\Agent\AgentDashboardController::class, 'createRequest'])->name('requests.create');
+    Route::get('/requests/{request}', [App\Http\Controllers\Agent\AgentDashboardController::class, 'showRequest'])->name('requests.show');
     Route::post('/requests', [App\Http\Controllers\Agent\AgentDashboardController::class, 'storeRequest'])->name('requests.store');
 });
 

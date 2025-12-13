@@ -103,6 +103,25 @@ class AgentDashboardController extends Controller
         return view('agent.create-request', compact('agen'));
     }
 
+    public function showRequest(ChangeRequest $request)
+    {
+        $user = Auth::user();
+        
+        // Check if user is agent and has agen profile
+        if (!$user->isAgent() || !$user->agen) {
+            return redirect()->route('dashboard')->with('error', 'Akses ditolak. Anda bukan agen atau profil agen belum diatur.');
+        }
+        
+        $agen = $user->agen;
+
+        // Pastikan request ini milik agen yang sedang login
+        if ($request->agen_id !== $agen->id) {
+            return redirect()->route('agent.requests')->with('error', 'Request tidak ditemukan.');
+        }
+
+        return view('agent.request-detail', compact('agen', 'request'));
+    }
+
     public function storeRequest(Request $request)
     {
         $user = Auth::user();
