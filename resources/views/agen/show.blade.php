@@ -229,15 +229,57 @@
             <div class="mt-6 sm:mt-8">
 
                 <div class="flex flex-col sm:flex-row gap-4">
-                    <!-- Telepon -->
+                    <!-- Social Media Links -->
                     <div class="flex-1 bg-gray-50 p-4 rounded-xl border border-gray-200">
-                        <div class="flex items-center">
-                            <div class="bg-takaful-lightBlue p-2 rounded-lg mr-3">
-                                <i class="fas fa-phone text-takaful-blue"></i>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="bg-takaful-lightBlue p-2 rounded-lg mr-3">
+                                    <i class="fas fa-share-alt text-takaful-blue"></i>
+                                </div>
+                                <div class="text-left">
+                                    <p class="font-semibold text-gray-700 text-sm">Sosial Media</p>
+                                    <p class="text-gray-600 text-xs">Hubungi melalui platform favorit Anda</p>
+                                </div>
                             </div>
-                            <div class="text-left">
-                                <p class="font-semibold text-gray-700 text-sm">Telepon</p>
-                                <p class="text-gray-800 font-medium">{{ $agen->telepon }}</p>
+                            
+                            <!-- Social Media Icons -->
+                            <div class="flex items-center space-x-3">
+                                @if($agen->instagram_username)
+                                <!-- Instagram -->
+                                <a href="{{ $agen->instagram_url }}" 
+                                   target="_blank"
+                                   class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white hover:shadow-lg transition-all duration-300 hover:scale-110"
+                                   title="Instagram (@{{ $agen->instagram_username }})">
+                                    <i class="fab fa-instagram text-sm"></i>
+                                </a>
+                                @endif
+                                
+                                @if($agen->facebook_username)
+                                <!-- Facebook -->
+                                <a href="{{ $agen->facebook_url }}" 
+                                   target="_blank"
+                                   class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white hover:shadow-lg transition-all duration-300 hover:scale-110"
+                                   title="Facebook ({{ $agen->facebook_username }})">
+                                    <i class="fab fa-facebook-f text-sm"></i>
+                                </a>
+                                @endif
+                                
+                                @if($agen->linkedin_username)
+                                <!-- LinkedIn -->
+                                <a href="{{ $agen->linkedin_url }}" 
+                                   target="_blank"
+                                   class="w-10 h-10 bg-blue-700 rounded-full flex items-center justify-center text-white hover:shadow-lg transition-all duration-300 hover:scale-110"
+                                   title="LinkedIn ({{ $agen->linkedin_username }})">
+                                    <i class="fab fa-linkedin-in text-sm"></i>
+                                </a>
+                                @endif
+                                
+                                @if(!$agen->instagram_username && !$agen->facebook_username && !$agen->linkedin_username)
+                                <!-- Default social media jika tidak ada yang diset -->
+                                <div class="text-gray-500 text-xs">
+                                    Belum ada social media
+                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -259,6 +301,7 @@
                     </div>
                 </div>
 
+                <!-- Contact Info Row -->
             </div>
         </div>
     </div>
@@ -387,17 +430,11 @@
 
                             <!-- WhatsApp Button -->
                             <div class="mt-auto pt-2">
-                                @if(isset($product->wa_link) && $product->wa_link)
-                                <a href="{{ $product->wa_link }}" 
+                                <a href="{{ $product->getWaLinkForAgen($agen) }}" 
                                    target="_blank"
                                    class="block bg-takaful-green hover:bg-takaful-darkGreen text-white py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg font-semibold text-xs sm:text-sm text-center transition-all duration-300 hover:shadow-md w-full border border-takaful-green/20">
                                     <i class="fab fa-whatsapp mr-1.5 sm:mr-2"></i>Ajukan Sekarang
                                 </a>
-                                @else
-                                <button class="block bg-gray-300 text-gray-500 py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg font-semibold text-xs sm:text-sm text-center w-full border border-gray-300 cursor-not-allowed">
-                                    <i class="fab fa-whatsapp mr-1.5 sm:mr-2"></i>Tidak Tersedia
-                                </button>
-                                @endif
                             </div>
                         </div>
                     </div>

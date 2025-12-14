@@ -28,9 +28,9 @@ class CreateAgen extends CreateRecord
 
     protected function afterCreate(): void
     {
-        // Handle product assignment after agen is created
+        // Handle product assignment after agen is created using many-to-many
         if (!empty($this->productIds)) {
-            Product::whereIn('id', $this->productIds)->update(['agen_id' => $this->record->id]);
+            $this->record->products()->sync($this->productIds);
         }
     }
 

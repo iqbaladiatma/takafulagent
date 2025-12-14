@@ -25,17 +25,12 @@ class EditAgen extends EditRecord
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
-        // Handle product assignment
+        // Handle product assignment using many-to-many
         if (isset($data['product_ids'])) {
             $selectedProductIds = $data['product_ids'];
             
-            // Remove this agent from all products first
-            Product::where('agen_id', $this->record->id)->update(['agen_id' => null]);
-            
-            // Assign selected products to this agent
-            if (!empty($selectedProductIds)) {
-                Product::whereIn('id', $selectedProductIds)->update(['agen_id' => $this->record->id]);
-            }
+            // Sync products with this agent (will add/remove as needed)
+            $this->record->products()->sync($selectedProductIds);
             
             // Remove product_ids from data as it's not a direct field
             unset($data['product_ids']);

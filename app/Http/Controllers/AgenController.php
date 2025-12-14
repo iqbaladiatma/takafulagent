@@ -15,9 +15,6 @@ class AgenController extends Controller
     public function index()
     {
         $agens = Agen::with('user')
-            ->whereHas('user', function($query) {
-                $query->where('role', 'agent');
-            })
             ->orderBy('nama')
             ->get();
 

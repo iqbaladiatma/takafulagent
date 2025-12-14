@@ -78,29 +78,29 @@ class AgenResource extends Resource
 
                 Forms\Components\Section::make('Social Media')
                     ->schema([
-                        Forms\Components\TextInput::make('instagram_username')
+                        Forms\Components\TextInput::make('instagram_url')
+                            ->url()
                             ->maxLength(255)
-                            ->label('Instagram Username')
-                            ->helperText('Contoh: demo_agent (tanpa @ atau https://)')
-                            ->prefix('@')
-                            ->placeholder('username'),
+                            ->label('Instagram URL')
+                            ->helperText('Contoh: https://instagram.com/username')
+                            ->prefixIcon('heroicon-o-camera'),
 
-                        Forms\Components\TextInput::make('facebook_username')
+                        Forms\Components\TextInput::make('facebook_url')
+                            ->url()
                             ->maxLength(255)
-                            ->label('Facebook Username')
-                            ->helperText('Contoh: demo.agent (tanpa https://)')
-                            ->prefix('facebook.com/')
-                            ->placeholder('username'),
+                            ->label('Facebook URL')
+                            ->helperText('Contoh: https://facebook.com/username')
+                            ->prefixIcon('heroicon-o-user-group'),
 
-                        Forms\Components\TextInput::make('linkedin_username')
+                        Forms\Components\TextInput::make('linkedin_url')
+                            ->url()
                             ->maxLength(255)
-                            ->label('LinkedIn Username')
-                            ->helperText('Contoh: demo-agent (tanpa https://)')
-                            ->prefix('linkedin.com/in/')
-                            ->placeholder('username'),
+                            ->label('LinkedIn URL')
+                            ->helperText('Contoh: https://linkedin.com/in/username')
+                            ->prefixIcon('heroicon-o-briefcase'),
                     ])
                     ->columns(1)
-                    ->description('Masukkan username social media saja. URL lengkap akan dibuat otomatis oleh sistem.'),
+                    ->description('Link social media agen (opsional). Jika tidak diisi, akan menggunakan social media perusahaan sebagai default.'),
 
                 Forms\Components\Section::make('Foto Profil & Background')
                     ->schema([
@@ -202,12 +202,35 @@ class AgenResource extends Resource
                     ->schema([
                         Forms\Components\CheckboxList::make('product_ids')
                             ->label('Pilih Produk untuk Agen Ini')
-                            ->options(function () {
-                                // Sekarang semua produk bisa dipilih oleh semua agen
-                                return Product::pluck('judul', 'id')->toArray();
+                            ->options(function ($record) {
+                                $query = Product::query();
+                                
+                                if ($record) {
+                                    // For edit: show unassigned products + products owned by this agent
+                                    $query->where(function ($q) use ($record) {
+                                        $q->whereNull('agen_id')
+                                          ->orWhere('agen_id', $record->id);
+                                    });
+                                } else {
+                                    // For create: show only unassigned products
+                                    $query->whereNull('agen_id');
+                                }
+                                
+                                return $query->pluck('judul', 'id')->toArray();
                             })
-                            ->descriptions(function () {
-                                return Product::get()
+                            ->descriptions(function ($record) {
+                                $query = Product::query();
+                                
+                                if ($record) {
+                                    $query->where(function ($q) use ($record) {
+                                        $q->whereNull('agen_id')
+                                          ->orWhere('agen_id', $record->id);
+                                    });
+                                } else {
+                                    $query->whereNull('agen_id');
+                                }
+                                
+                                return $query->get()
                                     ->pluck('deskripsi', 'id')
                                     ->map(fn($desc) => $desc ? \Str::limit($desc, 80) : 'Tidak ada deskripsi')
                                     ->toArray();
@@ -215,7 +238,7 @@ class AgenResource extends Resource
                             ->columns(1)
                             ->searchable()
                             ->bulkToggleable()
-                            ->helperText('Pilih produk dari master produk yang akan ditawarkan oleh agen ini. Semua agen bisa menggunakan produk yang sama.')
+                            ->helperText('Pilih produk yang akan ditawarkan oleh agen ini. Hanya produk yang belum dimiliki agen lain yang ditampilkan.')
                             ->afterStateHydrated(function (Forms\Components\CheckboxList $component, $state, $record) {
                                 if ($record) {
                                     $component->state($record->products->pluck('id')->toArray());
@@ -292,34 +315,42 @@ class AgenResource extends Resource
                     ->color('primary')
                     ->tooltip('Jumlah produk yang dimiliki agen'),
 
-                Tables\Columns\TextColumn::make('instagram_username')
-                    ->label('Instagram')
-                    ->formatStateUsing(fn ($state) => $state ? '@' . $state : '✗')
+                Tables\Columns\TextColumn::make('social_media')
+                    ->label('Social Media')
+                    ->formatStateUsing(function (Agen $record): string {
+                        $socials = [];
+                        if ($record->instagram_url) $socials[] = 'IG';
+                        if ($record->facebook_url) $socials[] = 'FB';
+                        if ($record->linkedin_url) $socials[] = 'LI';
+                        
+                        return empty($socials) ? 'Tidak ada' : implode(', ', $socials);
+                    })
                     ->badge()
-                    ->color(fn ($state) => $state ? 'success' : 'gray')
-                    ->toggleable(),
-
-                Tables\Columns\TextColumn::make('facebook_username')
-                    ->label('Facebook')
-                    ->formatStateUsing(fn ($state) => $state ? $state : '✗')
-                    ->badge()
-                    ->color(fn ($state) => $state ? 'success' : 'gray')
-                    ->toggleable(),
-
-                Tables\Columns\TextColumn::make('linkedin_username')
-                    ->label('LinkedIn')
-                    ->formatStateUsing(fn ($state) => $state ? $state : '✗')
-                    ->badge()
-                    ->color(fn ($state) => $state ? 'success' : 'gray')
-                    ->toggleable(),
+                    ->color(fn (Agen $record): string => {
+                        $count = collect([$record->instagram_url, $record->facebook_url, $record->linkedin_url])
+                            ->filter()->count();
+                        return match($count) {
+                            0 => 'gray',
+                            1 => 'warning',
+                            2 => 'info',
+                            3 => 'success',
+                            default => 'gray'
+                        };
+                    })
+                    ->tooltip(function (Agen $record): string {
+                        $details = [];
+                        if ($record->instagram_url) $details[] = 'Instagram: ' . $record->instagram_url;
+                        if ($record->facebook_url) $details[] = 'Facebook: ' . $record->facebook_url;
+                        if ($record->linkedin_url) $details[] = 'LinkedIn: ' . $record->linkedin_url;
+                        
+                        return empty($details) ? 'Belum ada social media yang diset' : implode("\n", $details);
+                    }),
 
                 Tables\Columns\TextColumn::make('deskripsi')
                     ->limit(50)
                     ->tooltip(fn (Agen $record): ?string => $record->deskripsi)
                     ->label('Deskripsi')
                     ->toggleable(),
-
-
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('d M Y, H:i')
@@ -335,6 +366,18 @@ class AgenResource extends Resource
                 Tables\Filters\Filter::make('no_photo')
                     ->label('Tanpa Foto')
                     ->query(fn ($query) => $query->whereNull('foto')),
+                Tables\Filters\Filter::make('has_social_media')
+                    ->label('Dengan Social Media')
+                    ->query(fn ($query) => $query->where(function ($q) {
+                        $q->whereNotNull('instagram_url')
+                          ->orWhereNotNull('facebook_url')
+                          ->orWhereNotNull('linkedin_url');
+                    })),
+                Tables\Filters\Filter::make('no_social_media')
+                    ->label('Tanpa Social Media')
+                    ->query(fn ($query) => $query->whereNull('instagram_url')
+                        ->whereNull('facebook_url')
+                        ->whereNull('linkedin_url')),
                 Tables\Filters\Filter::make('created_this_month')
                     ->label('Bulan Ini')
                     ->query(fn ($query) => $query->whereMonth('created_at', now()->month)),
@@ -368,23 +411,23 @@ class AgenResource extends Resource
                         ->icon('heroicon-o-share')
                         ->color('info')
                         ->form([
-                            Forms\Components\TextInput::make('instagram_username')
-                                ->label('Instagram Username')
-                                ->prefix('@')
-                                ->placeholder('username'),
-                            Forms\Components\TextInput::make('facebook_username')
-                                ->label('Facebook Username')
-                                ->prefix('facebook.com/')
-                                ->placeholder('username'),
-                            Forms\Components\TextInput::make('linkedin_username')
-                                ->label('LinkedIn Username')
-                                ->prefix('linkedin.com/in/')
-                                ->placeholder('username'),
+                            Forms\Components\TextInput::make('instagram_url')
+                                ->label('Instagram URL')
+                                ->url()
+                                ->placeholder('https://instagram.com/username'),
+                            Forms\Components\TextInput::make('facebook_url')
+                                ->label('Facebook URL')
+                                ->url()
+                                ->placeholder('https://facebook.com/username'),
+                            Forms\Components\TextInput::make('linkedin_url')
+                                ->label('LinkedIn URL')
+                                ->url()
+                                ->placeholder('https://linkedin.com/in/username'),
                         ])
                         ->fillForm(fn (Agen $record): array => [
-                            'instagram_username' => $record->instagram_username,
-                            'facebook_username' => $record->facebook_username,
-                            'linkedin_username' => $record->linkedin_username,
+                            'instagram_url' => $record->instagram_url,
+                            'facebook_url' => $record->facebook_url,
+                            'linkedin_url' => $record->linkedin_url,
                         ])
                         ->action(function (array $data, Agen $record): void {
                             $record->update($data);

@@ -17,6 +17,9 @@ class Agen extends Model
         'kode_agen',
         'telepon',
         'wa_link',
+        'instagram_username',
+        'facebook_username',
+        'linkedin_username',
         'foto',
         'background_image',
         'background_type',
@@ -38,11 +41,14 @@ class Agen extends Model
     }
 
     /**
-     * Relasi ke Products
+     * Relasi ke Products (Many-to-Many)
      */
     public function products()
     {
-        return $this->hasMany(Product::class)->orderBy('urutan');
+        return $this->belongsToMany(Product::class, 'agen_product')
+                    ->withPivot(['custom_wa_link', 'custom_description', 'urutan'])
+                    ->withTimestamps()
+                    ->orderBy('agen_product.urutan');
     }
 
     /**
@@ -140,5 +146,38 @@ class Agen extends Model
         }
 
         return asset('images/default-avatar.png');
+    }
+
+    /**
+     * Get Instagram URL from username
+     */
+    public function getInstagramUrlAttribute()
+    {
+        if ($this->instagram_username) {
+            return 'https://instagram.com/' . $this->instagram_username;
+        }
+        return null;
+    }
+
+    /**
+     * Get Facebook URL from username
+     */
+    public function getFacebookUrlAttribute()
+    {
+        if ($this->facebook_username) {
+            return 'https://facebook.com/' . $this->facebook_username;
+        }
+        return null;
+    }
+
+    /**
+     * Get LinkedIn URL from username
+     */
+    public function getLinkedinUrlAttribute()
+    {
+        if ($this->linkedin_username) {
+            return 'https://linkedin.com/in/' . $this->linkedin_username;
+        }
+        return null;
     }
 }
