@@ -167,19 +167,19 @@
         </div>
     </nav>
 
-<div class="max-w-6xl mx-auto px-4 sm:px-5 lg:px-6 py-6 md:py-8 container-padding">
+<div class="max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-8 container-padding">
 
     <!-- BACK BUTTON -->
     <a href="{{ route('home') }}"
-       class="inline-flex items-center mb-6 md:mb-8 bg-white border border-gray-300 px-4 py-2.5 rounded-lg text-gray-700 hover:shadow-md hover:border-takaful-blue transition-all">
-        <i class="fas fa-arrow-left mr-2"></i>Kembali
+       class="inline-flex items-center mb-4 sm:mb-6 lg:mb-8 bg-white border border-gray-300 px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-gray-700 hover:shadow-md hover:border-takaful-blue transition-all text-sm sm:text-base">
+        <i class="fas fa-arrow-left mr-1 sm:mr-2"></i>Kembali
     </a>
 
     <!-- MAIN CARD PROFILE -->
-    <div class="bg-white rounded-xl md:rounded-2xl shadow-lg overflow-hidden mb-6 md:mb-8">
+    <div class="bg-white rounded-lg sm:rounded-xl lg:rounded-2xl shadow-lg overflow-hidden mb-4 sm:mb-6 lg:mb-8">
 
         <!-- HEADER BACKGROUND BANNER -->
-        <div class="relative h-32 sm:h-40 md:h-48 lg:h-56 overflow-hidden" style="{{ $agen->background_style }}">
+        <div class="relative h-24 sm:h-32 lg:h-40 xl:h-48 overflow-hidden" style="{{ $agen->background_style }}">
             <div class="absolute inset-0 bg-black/10"></div>
 
             <!-- Decorative Pattern -->
@@ -187,14 +187,14 @@
         </div>
 
         <!-- PROFILE CONTENT FIXED - LINKEDIN LAYOUT -->
-        <div class="px-4 sm:px-6 md:px-8 pb-6">
+        <div class="px-3 sm:px-4 lg:px-6 xl:px-8 pb-4 sm:pb-6">
 
             <!-- FOTO + DETAIL DALAM 1 ROW -->
-            <div class="flex items-start gap-4 sm:gap-6 -mt-12 sm:-mt-14 md:-mt-16">
+            <div class="flex items-start gap-3 sm:gap-4 lg:gap-6 -mt-8 sm:-mt-12 lg:-mt-14 xl:-mt-16">
 
                 <!-- FOTO PROFIL DI KIRI (LINKEDIN STYLE) -->
-                <div class="relative">
-                    <div class="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-full border-4 sm:border-5 border-white shadow-lg overflow-hidden bg-white ring-4 ring-gray-100">
+                <div class="relative flex-shrink-0">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 xl:w-28 xl:h-28 rounded-full border-3 sm:border-4 lg:border-5 border-white shadow-lg overflow-hidden bg-white ring-2 sm:ring-4 ring-gray-100">
                         <img
                             src="{{ $agen->foto ? asset('storage/'.$agen->foto) : 'https://ui-avatars.com/api/?name=' . urlencode($agen->nama) . '&background=1D76BB&color=fff&size=400' }}"
                             alt="{{ $agen->nama }}"
@@ -204,53 +204,53 @@
                     </div>
 
                     <!-- Online Indicator -->
-                    <div class="absolute bottom-2 right-2 w-5 h-5 sm:w-6 sm:h-6 bg-green-500 rounded-full border-3 border-white shadow-lg"></div>
+                    <div class="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 w-3 h-3 sm:w-4 sm:h-4 lg:w-5 lg:h-5 xl:w-6 xl:h-6 bg-green-500 rounded-full border-2 sm:border-3 border-white shadow-lg"></div>
                 </div>
 
                 <!-- DETAIL DI KANAN FOTO -->
-                <div class="pt-4 sm:pt-6 md:pt-8 flex-1 relative z-10">
-                    <h1 class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-1 relative z-20">
+                <div class="pt-2 sm:pt-4 lg:pt-6 xl:pt-8 flex-1 relative z-10 min-w-0">
+                    <h1 class="text-base sm:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-bold text-white mb-1 relative z-20 leading-tight">
                         {{ $agen->nama }}
                     </h1>
 
-                    <p class="text-takaful-blue font-semibold text-base md:text-lg mb-2 relative z-20">
+                    <p class="text-takaful-blue font-semibold text-sm sm:text-base lg:text-lg mb-2 sm:mb-3 relative z-20">
                         {{ $agen->role }}
                     </p>
 
                     <!-- BADGE KODE AGEN -->
-                    <div class="inline-flex items-center bg-takaful-lightBlue text-takaful-blue px-4 py-2 rounded-full text-sm md:text-base font-bold border border-takaful-blue/30 relative z-20">
-                        <i class="fas fa-id-badge mr-2"></i>
+                    <div class="inline-flex items-center bg-takaful-lightBlue text-takaful-blue px-2 sm:px-3 lg:px-4 py-1 sm:py-1.5 lg:py-2 rounded-full text-xs sm:text-sm lg:text-base font-bold border border-takaful-blue/30 relative z-20">
+                        <i class="fas fa-id-badge mr-1 sm:mr-2 text-xs sm:text-sm"></i>
                         <span>{{ $agen->kode_agen }}</span>
                     </div>
                 </div>
             </div>
 
             <!-- CONTACT INFO -->
-            <div class="mt-6 sm:mt-8">
+            <div class="mt-4 sm:mt-6 lg:mt-8">
 
-                <div class="flex flex-col sm:flex-row gap-4">
+                <div class="flex flex-col lg:flex-row gap-3 sm:gap-4">
                     <!-- Social Media Links -->
-                    <div class="flex-1 bg-gray-50 p-4 rounded-xl border border-gray-200">
-                        <div class="flex items-center justify-between">
+                    <div class="flex-1 bg-gray-50 p-3 sm:p-4 rounded-lg sm:rounded-xl border border-gray-200">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                             <div class="flex items-center">
-                                <div class="bg-takaful-lightBlue p-2 rounded-lg mr-3">
-                                    <i class="fas fa-share-alt text-takaful-blue"></i>
+                                <div class="bg-takaful-lightBlue p-2 rounded-lg mr-2 sm:mr-3 flex-shrink-0">
+                                    <i class="fas fa-share-alt text-takaful-blue text-sm"></i>
                                 </div>
-                                <div class="text-left">
-                                    <p class="font-semibold text-gray-700 text-sm">Sosial Media</p>
-                                    <p class="text-gray-600 text-xs">Hubungi melalui platform favorit Anda</p>
+                                <div class="text-left min-w-0 flex-1">
+                                    <p class="font-semibold text-gray-700 text-xs sm:text-sm">Sosial Media</p>
+                                    <p class="text-gray-600 text-xs hidden sm:block">Hubungi melalui platform favorit Anda</p>
                                 </div>
                             </div>
                             
                             <!-- Social Media Icons -->
-                            <div class="flex items-center space-x-3">
+                            <div class="flex items-center space-x-2 sm:space-x-3 justify-center sm:justify-end">
                                 @if($agen->instagram_username)
                                 <!-- Instagram -->
                                 <a href="{{ $agen->instagram_url }}" 
                                    target="_blank"
-                                   class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white hover:shadow-lg transition-all duration-300 hover:scale-110"
+                                   class="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white hover:shadow-lg transition-all duration-300 hover:scale-110"
                                    title="Instagram (@{{ $agen->instagram_username }})">
-                                    <i class="fab fa-instagram text-sm"></i>
+                                    <i class="fab fa-instagram text-xs sm:text-sm"></i>
                                 </a>
                                 @endif
                                 
@@ -258,9 +258,9 @@
                                 <!-- Facebook -->
                                 <a href="{{ $agen->facebook_url }}" 
                                    target="_blank"
-                                   class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white hover:shadow-lg transition-all duration-300 hover:scale-110"
+                                   class="w-8 h-8 sm:w-10 sm:h-10 bg-blue-600 rounded-full flex items-center justify-center text-white hover:shadow-lg transition-all duration-300 hover:scale-110"
                                    title="Facebook ({{ $agen->facebook_username }})">
-                                    <i class="fab fa-facebook-f text-sm"></i>
+                                    <i class="fab fa-facebook-f text-xs sm:text-sm"></i>
                                 </a>
                                 @endif
                                 
@@ -268,9 +268,9 @@
                                 <!-- LinkedIn -->
                                 <a href="{{ $agen->linkedin_url }}" 
                                    target="_blank"
-                                   class="w-10 h-10 bg-blue-700 rounded-full flex items-center justify-center text-white hover:shadow-lg transition-all duration-300 hover:scale-110"
+                                   class="w-8 h-8 sm:w-10 sm:h-10 bg-blue-700 rounded-full flex items-center justify-center text-white hover:shadow-lg transition-all duration-300 hover:scale-110"
                                    title="LinkedIn ({{ $agen->linkedin_username }})">
-                                    <i class="fab fa-linkedin-in text-sm"></i>
+                                    <i class="fab fa-linkedin-in text-xs sm:text-sm"></i>
                                 </a>
                                 @endif
                                 
@@ -284,19 +284,13 @@
                         </div>
                     </div>
 
-                    <!-- WhatsApp (mobile only) -->
-                    <div class="sm:hidden">
+                    <!-- WhatsApp Button -->
+                    <div class="lg:w-auto">
                         <a href="{{ $agen->wa_link }}" target="_blank"
-                           class="block bg-takaful-green hover:bg-takaful-darkGreen text-white py-3 px-4 rounded-xl font-semibold text-center transition-all shadow-md hover:shadow-lg">
-                            <i class="fab fa-whatsapp mr-2"></i>Chat via WhatsApp
-                        </a>
-                    </div>
-                    
-                    <!-- WhatsApp (desktop) -->
-                    <div class="hidden sm:block">
-                        <a href="{{ $agen->wa_link }}" target="_blank"
-                           class="block bg-takaful-green hover:bg-takaful-darkGreen text-white py-3 px-6 rounded-xl font-semibold text-center transition-all shadow-md hover:shadow-lg">
-                            <i class="fab fa-whatsapp mr-2"></i>Chat via WhatsApp
+                           class="block bg-takaful-green hover:bg-takaful-darkGreen text-white py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg sm:rounded-xl font-semibold text-center transition-all shadow-md hover:shadow-lg text-sm sm:text-base w-full lg:whitespace-nowrap">
+                            <i class="fab fa-whatsapp mr-1 sm:mr-2"></i>
+                            <span class="hidden sm:inline">Chat via WhatsApp</span>
+                            <span class="sm:hidden">WhatsApp</span>
                         </a>
                     </div>
                 </div>
@@ -307,31 +301,31 @@
     </div>
 
     <!-- GRID LAYOUT -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
 
         <!-- LEFT COLUMN -->
-        <div class="lg:col-span-2 space-y-6 md:space-y-8">
+        <div class="lg:col-span-2 space-y-4 sm:space-y-6 lg:space-y-8">
 
             <!-- ABOUT SECTION -->
             @if($agen->deskripsi)
-            <div class="bg-white p-5 sm:p-6 md:p-8 rounded-xl md:rounded-2xl shadow-sm border border-gray-100">
-                <div class="flex items-center mb-4 md:mb-6">
-                    <div class="bg-takaful-lightBlue p-3 rounded-lg mr-4">
-                        <i class="fas fa-user text-takaful-blue text-lg"></i>
+            <div class="bg-white p-4 sm:p-5 lg:p-6 xl:p-8 rounded-lg sm:rounded-xl lg:rounded-2xl shadow-sm border border-gray-100">
+                <div class="flex items-center mb-3 sm:mb-4 lg:mb-6">
+                    <div class="bg-takaful-lightBlue p-2 sm:p-3 rounded-lg mr-3 sm:mr-4 flex-shrink-0">
+                        <i class="fas fa-user text-takaful-blue text-sm sm:text-base lg:text-lg"></i>
                     </div>
-                    <h2 class="font-bold text-lg md:text-xl text-gray-800">Tentang Saya</h2>
+                    <h2 class="font-bold text-base sm:text-lg lg:text-xl text-gray-800">Tentang Saya</h2>
                 </div>
 
                 <div class="relative">
-                    <div id="about-text" class="text-gray-700 leading-relaxed text-sm md:text-base overflow-hidden max-h-24 transition-all duration-300">
+                    <div id="about-text" class="text-gray-700 leading-relaxed text-sm sm:text-base overflow-hidden max-h-20 sm:max-h-24 transition-all duration-300">
                         {{ $agen->deskripsi }}
                     </div>
 
                     @if(strlen($agen->deskripsi) > 300)
-                    <div class="mt-4">
+                    <div class="mt-3 sm:mt-4">
                         <button onclick="toggleText('about')" 
                             id="about-toggle"
-                            class="font-semibold text-sm inline-flex items-center transition-colors"
+                            class="font-semibold text-xs sm:text-sm inline-flex items-center transition-colors"
                             style="color: #8CC63F;">
                             Lihat Selengkapnya
                             <i class="fas fa-chevron-down ml-1 text-xs"></i>

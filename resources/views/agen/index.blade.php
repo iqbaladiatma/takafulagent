@@ -252,18 +252,20 @@
     </section>
 
     <!-- Search Section -->
-    <div class="section-container -mt-8 relative z-10">
-        <div class="bg-white rounded-xl shadow-lg p-6 card-shadow">
-            <div class="flex flex-col md:flex-row gap-4">
+    <div class="section-container -mt-6 sm:-mt-8 relative z-10">
+        <div class="bg-white rounded-lg sm:rounded-xl shadow-lg p-4 sm:p-6 card-shadow">
+            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <div class="flex-1">
                     <div class="relative">
-                        <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <i class="fas fa-search absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
                         <input type="text" id="searchInput" placeholder="Cari nama agen..." 
-                               class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-takaful-blue focus:border-transparent transition-all duration-300">
+                               class="w-full pl-9 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-takaful-blue focus:border-transparent transition-all duration-300 text-sm sm:text-base">
                     </div>
                 </div>
-                <button onclick="clearSearch()" class="px-6 py-3 bg-takaful-green text-white rounded-lg hover:bg-takaful-darkGreen transition-all duration-300 btn-hover-effect">
-                    <i class="fas fa-times mr-2"></i>Reset
+                <button onclick="clearSearch()" class="px-4 sm:px-6 py-2.5 sm:py-3 bg-takaful-green text-white rounded-lg hover:bg-takaful-darkGreen transition-all duration-300 btn-hover-effect text-sm sm:text-base font-medium">
+                    <i class="fas fa-times mr-1 sm:mr-2"></i>
+                    <span class="hidden sm:inline">Reset</span>
+                    <span class="sm:hidden">Reset</span>
                 </button>
             </div>
         </div>
@@ -272,17 +274,17 @@
     <!-- Agents Grid -->
     <section class="py-12 md:py-16 bg-white">
         <div class="section-container">
-            <!-- Grid layout: 2 kolom di HP, 3 di tablet, 4 di laptop -->
-            <div id="agentsGrid" class="mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
+            <!-- Grid layout: 2 kolom di HP, 3 di tablet, 4 di laptop, 5 di desktop besar -->
+            <div id="agentsGrid" class="mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4 lg:gap-5">
                 @forelse($agens as $agen)
                     <!-- Card dengan warna biru bersih -->
                     <a href="{{ route('agen.show', $agen->kode_agen) }}" 
-                       class="agent-card bg-white rounded-lg md:rounded-xl card-shadow overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg block cursor-pointer group border border-takaful-lightBlue/30 hover:border-takaful-blue/50">
+                       class="agent-card bg-white rounded-lg lg:rounded-xl card-shadow overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg block cursor-pointer group border border-takaful-lightBlue/30 hover:border-takaful-blue/50">
                         
                         <!-- Bagian atas dengan background biru gradient -->
-                        <div class="relative pt-8 md:pt-10 px-2 md:px-3 bg-gradient-to-r from-takaful-blue to-takaful-darkBlue rounded-t-lg md:rounded-t-xl">
+                        <div class="relative pt-6 sm:pt-8 lg:pt-10 px-2 sm:px-3 bg-gradient-to-r from-takaful-blue to-takaful-darkBlue rounded-t-lg lg:rounded-t-xl">
                             <!-- Foto agen -->
-                            <div class="w-20 h-20 md:w-24 md:h-24 mx-auto rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:border-takaful-blue/80 group-hover:shadow-[0_0_20px_rgba(29,118,187,0.3)] transition-all duration-300 bg-white relative z-10">
+                            <div class="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mx-auto rounded-full overflow-hidden border-3 sm:border-4 border-white shadow-xl group-hover:border-takaful-blue/80 group-hover:shadow-[0_0_20px_rgba(29,118,187,0.3)] transition-all duration-300 bg-white relative z-10">
                                 <img 
                                     src="{{ $agen->foto ? asset('storage/' . $agen->foto) : 'https://ui-avatars.com/api/?name=' . urlencode($agen->nama) . '&background=1D76BB&color=fff&size=200' }}" 
                                     alt="{{ $agen->nama }}"
@@ -291,39 +293,39 @@
                                 >
                             </div>
                             <!-- Decorative element - biru saja -->
-                            <div class="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-takaful-blue/60 to-takaful-darkBlue/60"></div>
+                            <div class="absolute bottom-0 left-0 right-0 h-1.5 sm:h-2 bg-gradient-to-r from-takaful-blue/60 to-takaful-darkBlue/60"></div>
                         </div>
                         
                         <!-- Bagian bawah dengan informasi -->
-                        <div class="pb-4 md:pb-5 px-3 md:px-4 text-center pt-6">
+                        <div class="pb-3 sm:pb-4 lg:pb-5 px-2 sm:px-3 lg:px-4 text-center pt-4 sm:pt-5 lg:pt-6">
                             <!-- Nama -->
-                            <h3 class="font-bold text-gray-800 mb-1 group-hover:text-takaful-blue transition-colors duration-300 text-sm md:text-base truncate agent-name">
+                            <h3 class="font-bold text-gray-800 mb-1 group-hover:text-takaful-blue transition-colors duration-300 text-xs sm:text-sm lg:text-base truncate agent-name leading-tight">
                                 {{ $agen->nama }}
                             </h3>
                             
                             <!-- Posisi/Role -->
-                            <p class="text-takaful-blue font-semibold mb-3 text-xs md:text-sm truncate">
+                            <p class="text-takaful-blue font-semibold mb-2 sm:mb-3 text-xs sm:text-sm truncate">
                                 {{ $agen->role }}
                             </p>
                             
                             <!-- Kode Agen -->
-                            <div class="inline-flex items-center bg-takaful-lightBlue text-takaful-blue px-3 py-1.5 rounded-full text-xs font-bold mb-4 border border-takaful-blue/30 group-hover:border-takaful-blue/60 transition-all duration-300">
-                                <i class="fas fa-id-badge mr-1.5"></i>
-                                <span class="font-bold tracking-wide">{{ $agen->kode_agen }}</span>
+                            <div class="inline-flex items-center bg-takaful-lightBlue text-takaful-blue px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs font-bold mb-3 sm:mb-4 border border-takaful-blue/30 group-hover:border-takaful-blue/60 transition-all duration-300">
+                                <i class="fas fa-id-badge mr-1 sm:mr-1.5 text-xs"></i>
+                                <span class="font-bold tracking-wide text-xs">{{ $agen->kode_agen }}</span>
                             </div>
                             
                             <!-- Stats -->
                             @if($agen->tahun_pengalaman || $agen->klien_terlayani)
-                                <div class="grid grid-cols-2 gap-2 mb-4 text-center">
+                                <div class="grid grid-cols-2 gap-1.5 sm:gap-2 mb-3 sm:mb-4 text-center">
                                     @if($agen->tahun_pengalaman)
-                                        <div class="bg-takaful-lightBlue rounded-lg p-2">
-                                            <div class="text-lg font-bold text-takaful-blue">{{ $agen->tahun_pengalaman }}</div>
+                                        <div class="bg-takaful-lightBlue rounded-lg p-1.5 sm:p-2">
+                                            <div class="text-sm sm:text-base lg:text-lg font-bold text-takaful-blue">{{ $agen->tahun_pengalaman }}</div>
                                             <div class="text-xs text-gray-600">Tahun</div>
                                         </div>
                                     @endif
                                     @if($agen->klien_terlayani)
-                                        <div class="bg-takaful-light rounded-lg p-2">
-                                            <div class="text-lg font-bold text-takaful-green">{{ $agen->klien_terlayani }}+</div>
+                                        <div class="bg-takaful-light rounded-lg p-1.5 sm:p-2">
+                                            <div class="text-sm sm:text-base lg:text-lg font-bold text-takaful-green">{{ $agen->klien_terlayani }}+</div>
                                             <div class="text-xs text-gray-600">Klien</div>
                                         </div>
                                     @endif
@@ -331,10 +333,11 @@
                             @endif
                             
                             <!-- Tombol Profil -->
-                            <div class="mt-2">
-                                <span class="inline-flex items-center justify-center text-takaful-blue font-semibold text-xs md:text-sm bg-takaful-lightBlue hover:bg-takaful-blue hover:text-white px-4 py-2 rounded-lg transition-all duration-300 shadow-sm group-hover:shadow-md">
-                                    <span>Lihat Profil</span>
-                                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
+                            <div class="mt-1 sm:mt-2">
+                                <span class="inline-flex items-center justify-center text-takaful-blue font-semibold text-xs sm:text-sm bg-takaful-lightBlue hover:bg-takaful-blue hover:text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg transition-all duration-300 shadow-sm group-hover:shadow-md w-full">
+                                    <span class="hidden sm:inline">Lihat Profil</span>
+                                    <span class="sm:hidden">Profil</span>
+                                    <i class="fas fa-arrow-right ml-1 sm:ml-2 group-hover:translate-x-1 transition-transform duration-300 text-xs"></i>
                                 </span>
                             </div>
                         </div>

@@ -61,8 +61,15 @@
             max-width: 1280px;
             margin-left: auto;
             margin-right: auto;
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        @media (min-width: 640px) {
+            .section-container {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
         }
         
         @media (min-width: 768px) {
@@ -73,6 +80,13 @@
         }
         
         @media (min-width: 1024px) {
+            .section-container {
+                padding-left: 3rem;
+                padding-right: 3rem;
+            }
+        }
+        
+        @media (min-width: 1280px) {
             .section-container {
                 padding-left: 4rem;
                 padding-right: 4rem;
@@ -141,99 +155,103 @@
     <!-- Navigation Bar -->
     <nav class="sticky top-0 z-50 bg-white shadow-md">
         <div class="section-container">
-            <div class="flex items-center justify-between h-20">
+            <div class="flex items-center justify-between h-16 sm:h-18 lg:h-20">
                 <!-- Logo -->
                 <div class="flex items-center">
-                    <img src="{{ asset('images/logo-takaful.png') }}" alt="Takaful Keluarga" class="h-10 sm:h-12">
+                    <img src="{{ asset('images/logo-takaful.png') }}" alt="Takaful Keluarga" class="h-8 sm:h-10 lg:h-12">
                 </div>
 
                 <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-10">
-                    <a href="#beranda" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group">
+                <div class="hidden lg:flex items-center space-x-6 xl:space-x-10">
+                    <a href="#beranda" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group text-sm xl:text-base">
                         Beranda
                         <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-takaful-blue group-hover:w-full transition-all duration-300"></span>
                     </a>
-                    <a href="{{ route('agen.index') }}" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group">
+                    <a href="{{ route('agen.index') }}" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group text-sm xl:text-base">
                         Daftar Agen
                         <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-takaful-blue group-hover:w-full transition-all duration-300"></span>
                     </a>
-                    <a href="#layanan" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group">
+                    <a href="#layanan" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group text-sm xl:text-base">
                         Layanan
                         <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-takaful-blue group-hover:w-full transition-all duration-300"></span>
                     </a>
-                    <a href="#tentang" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group">
+                    <a href="#tentang" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group text-sm xl:text-base">
                         Tentang
                         <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-takaful-blue group-hover:w-full transition-all duration-300"></span>
                     </a>
-                    <a href="#kontak" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group">
+                    <a href="#kontak" class="text-gray-700 font-medium hover:text-takaful-blue transition-colors duration-300 relative group text-sm xl:text-base">
                         Kontak
                         <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-takaful-blue group-hover:w-full transition-all duration-300"></span>
                     </a>
                 </div>
 
                 <!-- Auth Buttons - Desktop -->
-                <div class="hidden md:flex items-center space-x-4">
+                <div class="hidden lg:flex items-center space-x-2 xl:space-x-4">
                     @auth
                         @if(auth()->user()->role === 'admin')
-                            <a href="/admin" class="px-5 py-2.5 bg-takaful-blue text-white font-medium rounded-lg hover:bg-takaful-darkBlue transition-all duration-300 btn-hover-effect">
-                                <i class="fas fa-user-shield mr-2"></i>Admin
+                            <a href="/admin" class="px-3 xl:px-5 py-2 xl:py-2.5 bg-takaful-blue text-white font-medium rounded-lg hover:bg-takaful-darkBlue transition-all duration-300 btn-hover-effect text-sm xl:text-base">
+                                <i class="fas fa-user-shield mr-1 xl:mr-2"></i>
+                                <span class="hidden xl:inline">Admin</span>
+                                <span class="xl:hidden">A</span>
                             </a>
                         @else
-                            <a href="{{ route('dashboard') }}" class="px-5 py-2.5 bg-takaful-green text-white font-medium rounded-lg hover:bg-takaful-darkGreen transition-all duration-300 btn-hover-effect">
-                                <i class="fas fa-th-large mr-2"></i>Dashboard
+                            <a href="{{ route('dashboard') }}" class="px-3 xl:px-5 py-2 xl:py-2.5 bg-takaful-green text-white font-medium rounded-lg hover:bg-takaful-darkGreen transition-all duration-300 btn-hover-effect text-sm xl:text-base">
+                                <i class="fas fa-th-large mr-1 xl:mr-2"></i>
+                                <span class="hidden xl:inline">Dashboard</span>
+                                <span class="xl:hidden">Dash</span>
                             </a>
                         @endif
                     @else
-                        <a href="{{ route('login') }}" class="px-5 py-2.5 border border-takaful-blue text-takaful-blue font-medium rounded-lg hover:bg-takaful-lightBlue transition-all duration-300 btn-hover-effect">
+                        <a href="{{ route('login') }}" class="px-3 xl:px-5 py-2 xl:py-2.5 border border-takaful-blue text-takaful-blue font-medium rounded-lg hover:bg-takaful-lightBlue transition-all duration-300 btn-hover-effect text-sm xl:text-base">
                             Masuk
                         </a>
-                        <a href="{{ route('register') }}" class="px-5 py-2.5 bg-takaful-green text-white font-medium rounded-lg hover:bg-takaful-darkGreen transition-all duration-300 btn-hover-effect">
+                        <a href="{{ route('register') }}" class="px-3 xl:px-5 py-2 xl:py-2.5 bg-takaful-green text-white font-medium rounded-lg hover:bg-takaful-darkGreen transition-all duration-300 btn-hover-effect text-sm xl:text-base">
                             Daftar
                         </a>
                     @endauth
                 </div>
 
                 <!-- Mobile Menu Button -->
-                <button id="mobileMenuButton" class="md:hidden text-gray-700 hover:text-takaful-blue">
-                    <i class="fas fa-bars text-2xl"></i>
+                <button id="mobileMenuButton" class="lg:hidden text-gray-700 hover:text-takaful-blue p-2 rounded-lg hover:bg-gray-100 transition-colors">
+                    <i class="fas fa-bars text-xl sm:text-2xl"></i>
                 </button>
             </div>
 
             <!-- Mobile Menu -->
-            <div id="mobileMenu" class="mobile-menu hidden md:hidden bg-white py-4 border-t border-gray-100">
-                <div class="flex flex-col space-y-4">
-                    <a href="#beranda" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100">
+            <div id="mobileMenu" class="mobile-menu hidden lg:hidden bg-white py-3 sm:py-4 border-t border-gray-100">
+                <div class="flex flex-col space-y-3 sm:space-y-4 px-2 sm:px-0">
+                    <a href="#beranda" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100 text-sm sm:text-base">
                         <i class="fas fa-home mr-3 text-takaful-blue"></i>Beranda
                     </a>
-                    <a href="{{ route('agen.index') }}" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100">
+                    <a href="{{ route('agen.index') }}" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100 text-sm sm:text-base">
                         <i class="fas fa-users mr-3 text-takaful-blue"></i>Daftar Agen
                     </a>
-                    <a href="#layanan" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100">
+                    <a href="#layanan" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100 text-sm sm:text-base">
                         <i class="fas fa-concierge-bell mr-3 text-takaful-blue"></i>Layanan
                     </a>
-                    <a href="#tentang" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100">
+                    <a href="#tentang" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100 text-sm sm:text-base">
                         <i class="fas fa-info-circle mr-3 text-takaful-blue"></i>Tentang
                     </a>
-                    <a href="#kontak" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100">
+                    <a href="#kontak" class="text-gray-700 font-medium hover:text-takaful-blue py-2 border-b border-gray-100 text-sm sm:text-base">
                         <i class="fas fa-phone-alt mr-3 text-takaful-blue"></i>Kontak
                     </a>
                     
-                    <div class="pt-4 space-y-3">
+                    <div class="pt-3 sm:pt-4 space-y-2 sm:space-y-3">
                         @auth
                             @if(auth()->user()->role === 'admin')
-                                <a href="/admin" class="block text-center px-4 py-2.5 bg-takaful-blue text-white font-medium rounded-lg hover:bg-takaful-darkBlue transition-all duration-300">
+                                <a href="/admin" class="block text-center px-4 py-2.5 bg-takaful-blue text-white font-medium rounded-lg hover:bg-takaful-darkBlue transition-all duration-300 text-sm sm:text-base">
                                     <i class="fas fa-user-shield mr-2"></i>Admin Panel
                                 </a>
                             @else
-                                <a href="{{ route('dashboard') }}" class="block text-center px-4 py-2.5 bg-takaful-green text-white font-medium rounded-lg hover:bg-takaful-darkGreen transition-all duration-300">
+                                <a href="{{ route('dashboard') }}" class="block text-center px-4 py-2.5 bg-takaful-green text-white font-medium rounded-lg hover:bg-takaful-darkGreen transition-all duration-300 text-sm sm:text-base">
                                     <i class="fas fa-th-large mr-2"></i>Dashboard
                                 </a>
                             @endif
                         @else
-                            <a href="{{ route('login') }}" class="block text-center px-4 py-2.5 border border-takaful-blue text-takaful-blue font-medium rounded-lg hover:bg-takaful-lightBlue transition-all duration-300">
+                            <a href="{{ route('login') }}" class="block text-center px-4 py-2.5 border border-takaful-blue text-takaful-blue font-medium rounded-lg hover:bg-takaful-lightBlue transition-all duration-300 text-sm sm:text-base">
                                 <i class="fas fa-sign-in-alt mr-2"></i>Masuk
                             </a>
-                            <a href="{{ route('register') }}" class="block text-center px-4 py-2.5 bg-takaful-green text-white font-medium rounded-lg hover:bg-takaful-darkGreen transition-all duration-300">
+                            <a href="{{ route('register') }}" class="block text-center px-4 py-2.5 bg-takaful-green text-white font-medium rounded-lg hover:bg-takaful-darkGreen transition-all duration-300 text-sm sm:text-base">
                                 <i class="fas fa-user-plus mr-2"></i>Daftar
                             </a>
                         @endauth
@@ -244,46 +262,44 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="beranda" class="relative overflow-hidden bg-takaful-blue text-white py-16 md:py-24">
+    <section id="beranda" class="relative overflow-hidden bg-takaful-blue text-white py-12 sm:py-16 lg:py-20 xl:py-24">
         <div class="absolute inset-0 z-0 hero-pattern"></div>
-        <div class="absolute top-0 right-0 w-64 h-64 bg-takaful-green opacity-10 rounded-full -translate-y-32 translate-x-32"></div>
-        <div class="absolute bottom-0 left-0 w-80 h-80 bg-takaful-blue opacity-10 rounded-full translate-y-40 -translate-x-40"></div>
+        <div class="absolute top-0 right-0 w-32 h-32 sm:w-48 sm:h-48 lg:w-64 lg:h-64 bg-takaful-green opacity-10 rounded-full -translate-y-16 sm:-translate-y-24 lg:-translate-y-32 translate-x-16 sm:translate-x-24 lg:translate-x-32"></div>
+        <div class="absolute bottom-0 left-0 w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 bg-takaful-blue opacity-10 rounded-full translate-y-24 sm:translate-y-32 lg:translate-y-40 -translate-x-24 sm:-translate-x-32 lg:-translate-x-40"></div>
         
         <div class="section-container relative z-10">
             <div class="max-w-4xl mx-auto text-center animate-fade-in">
-               
-                
-                <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-                    Lindungi Keluarga Anda dengan 
-                    <span class="text-takaful-light">Asuransi Syariah</span>
+                <h1 class="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 sm:mb-6 leading-tight">
+                    <span class="block sm:inline">Lindungi Keluarga Anda dengan</span>
+                    <span class="text-takaful-light block sm:inline">Asuransi Syariah</span>
                 </h1>
                 
-                <p class="text-lg md:text-xl mb-10 opacity-95 max-w-3xl mx-auto">
+                <p class="text-sm sm:text-base lg:text-lg xl:text-xl mb-8 sm:mb-10 opacity-95 max-w-3xl mx-auto leading-relaxed">
                     Memberikan perlindungan terbaik berdasarkan prinsip syariah yang amanah, transparan, dan saling tolong-menolong
                 </p>
                 
-                <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16">
-                    <a href="{{ route('agen.index') }}" class="px-6 py-3.5 bg-white text-takaful-blue font-bold rounded-lg hover:bg-gray-100 transition-all duration-300 btn-hover-effect animate-slide-up shadow-lg">
-                        <i class="fas fa-users mr-3"></i>Lihat Semua Agen
+                <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-12 sm:mb-16">
+                    <a href="{{ route('agen.index') }}" class="px-4 sm:px-6 py-3 sm:py-3.5 bg-white text-takaful-blue font-bold rounded-lg hover:bg-gray-100 transition-all duration-300 btn-hover-effect animate-slide-up shadow-lg text-sm sm:text-base">
+                        <i class="fas fa-users mr-2 sm:mr-3"></i>Lihat Semua Agen
                     </a>
-                    <a href="{{ route('register') }}" class="px-6 py-3.5 bg-takaful-green text-white font-bold rounded-lg hover:bg-takaful-darkGreen transition-all duration-300 btn-hover-effect animate-slide-up" style="animation-delay: 0.1s">
-                        <i class="fas fa-user-plus mr-3"></i>Daftar Sekarang
+                    <a href="{{ route('register') }}" class="px-4 sm:px-6 py-3 sm:py-3.5 bg-takaful-green text-white font-bold rounded-lg hover:bg-takaful-darkGreen transition-all duration-300 btn-hover-effect animate-slide-up text-sm sm:text-base" style="animation-delay: 0.1s">
+                        <i class="fas fa-user-plus mr-2 sm:mr-3"></i>Daftar Sekarang
                     </a>
                 </div>
                 
                 <!-- Stats -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-                    <div class="stat-card rounded-xl p-5 text-center animate-float">
-                        <div class="text-2xl md:text-3xl font-bold mb-2">{{ $totalAgen }}+</div>
-                        <div class="text-sm opacity-90 font-medium">Agen Profesional</div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-3xl mx-auto">
+                    <div class="stat-card rounded-lg sm:rounded-xl p-4 sm:p-5 text-center animate-float">
+                        <div class="text-xl sm:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2">{{ $totalAgen }}+</div>
+                        <div class="text-xs sm:text-sm opacity-90 font-medium">Agen Profesional</div>
                     </div>
-                    <div class="stat-card rounded-xl p-5 text-center animate-float" style="animation-delay: 0.2s">
-                        <div class="text-2xl md:text-3xl font-bold mb-2">10K+</div>
-                        <div class="text-sm opacity-90 font-medium">Nasabah Terlayani</div>
+                    <div class="stat-card rounded-lg sm:rounded-xl p-4 sm:p-5 text-center animate-float" style="animation-delay: 0.2s">
+                        <div class="text-xl sm:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2">10K+</div>
+                        <div class="text-xs sm:text-sm opacity-90 font-medium">Nasabah Terlayani</div>
                     </div>
-                    <div class="stat-card rounded-xl p-5 text-center animate-float" style="animation-delay: 0.4s">
-                        <div class="text-2xl md:text-3xl font-bold mb-2">15+</div>
-                        <div class="text-sm opacity-90 font-medium">Tahun Pengalaman</div>
+                    <div class="stat-card rounded-lg sm:rounded-xl p-4 sm:p-5 text-center animate-float" style="animation-delay: 0.4s">
+                        <div class="text-xl sm:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2">15+</div>
+                        <div class="text-xs sm:text-sm opacity-90 font-medium">Tahun Pengalaman</div>
                     </div>
                 </div>
             </div>
@@ -345,17 +361,17 @@
         </div>
 
         @if($featuredAgens->count() > 0)
-            <!-- Grid layout: 2 kolom di HP, 3 di tablet, 4 di laptop -->
-            <div class="mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
+            <!-- Grid layout: 2 kolom di HP, 3 di tablet, 4 di laptop, 5 di desktop besar -->
+            <div class="mx-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 lg:gap-5">
                 @foreach($featuredAgens as $agen)
                     <!-- Card dengan warna biru bersih -->
                     <a href="{{ route('agen.show', $agen->kode_agen) }}" 
-                       class="bg-white rounded-lg md:rounded-xl card-shadow overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg block cursor-pointer group border border-takaful-lightBlue/30 hover:border-takaful-blue/50">
+                       class="bg-white rounded-lg lg:rounded-xl card-shadow overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg block cursor-pointer group border border-takaful-lightBlue/30 hover:border-takaful-blue/50">
                         
                         <!-- Bagian atas dengan background biru gradient -->
-                        <div class="relative pt-8 md:pt-10 px-2 md:px-3 bg-gradient-to-r from-takaful-blue to-takaful-darkBlue rounded-t-lg md:rounded-t-xl">
+                        <div class="relative pt-6 sm:pt-8 lg:pt-10 px-2 sm:px-3 bg-gradient-to-r from-takaful-blue to-takaful-darkBlue rounded-t-lg lg:rounded-t-xl">
                             <!-- Foto agen -->
-                            <div class="w-20 h-20 md:w-24 md:h-24 mx-auto rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:border-takaful-blue/80 group-hover:shadow-[0_0_20px_rgba(29,118,187,0.3)] transition-all duration-300 bg-white relative z-10">
+                            <div class="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 mx-auto rounded-full overflow-hidden border-3 sm:border-4 border-white shadow-xl group-hover:border-takaful-blue/80 group-hover:shadow-[0_0_20px_rgba(29,118,187,0.3)] transition-all duration-300 bg-white relative z-10">
                                 <img 
                                     src="{{ $agen->foto ? asset('storage/' . $agen->foto) : 'https://ui-avatars.com/api/?name=' . urlencode($agen->nama) . '&background=1D76BB&color=fff&size=200' }}" 
                                     alt="{{ $agen->nama }}"
@@ -364,32 +380,33 @@
                                 >
                             </div>
                             <!-- Decorative element - biru saja -->
-                            <div class="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-takaful-blue/60 to-takaful-darkBlue/60"></div>
+                            <div class="absolute bottom-0 left-0 right-0 h-1.5 sm:h-2 bg-gradient-to-r from-takaful-blue/60 to-takaful-darkBlue/60"></div>
                         </div>
                         
                         <!-- Bagian bawah dengan informasi -->
-                        <div class="pb-4 md:pb-5 px-3 md:px-4 text-center pt-6">
+                        <div class="pb-3 sm:pb-4 lg:pb-5 px-2 sm:px-3 lg:px-4 text-center pt-4 sm:pt-5 lg:pt-6">
                             <!-- Nama -->
-                            <h3 class="font-bold text-gray-800 mb-1 group-hover:text-takaful-blue transition-colors duration-300 text-sm md:text-base truncate">
+                            <h3 class="font-bold text-gray-800 mb-1 group-hover:text-takaful-blue transition-colors duration-300 text-xs sm:text-sm lg:text-base truncate leading-tight">
                                 {{ $agen->nama }}
                             </h3>
                             
                             <!-- Posisi/Role -->
-                            <p class="text-takaful-blue font-semibold mb-3 text-xs md:text-sm truncate">
+                            <p class="text-takaful-blue font-semibold mb-2 sm:mb-3 text-xs sm:text-sm truncate">
                                 {{ $agen->role }}
                             </p>
                             
                             <!-- Kode Agen -->
-                            <div class="inline-flex items-center bg-takaful-lightBlue text-takaful-blue px-3 py-1.5 rounded-full text-xs font-bold mb-4 border border-takaful-blue/30 group-hover:border-takaful-blue/60 transition-all duration-300">
-                                <i class="fas fa-id-badge mr-1.5"></i>
-                                <span class="font-bold tracking-wide">{{ $agen->kode_agen }}</span>
+                            <div class="inline-flex items-center bg-takaful-lightBlue text-takaful-blue px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs font-bold mb-3 sm:mb-4 border border-takaful-blue/30 group-hover:border-takaful-blue/60 transition-all duration-300">
+                                <i class="fas fa-id-badge mr-1 sm:mr-1.5 text-xs"></i>
+                                <span class="font-bold tracking-wide text-xs">{{ $agen->kode_agen }}</span>
                             </div>
                             
                             <!-- Tombol Profil -->
-                            <div class="mt-2">
-                                <span class="inline-flex items-center justify-center text-takaful-blue font-semibold text-xs md:text-sm bg-takaful-lightBlue hover:bg-takaful-blue hover:text-white px-4 py-2 rounded-lg transition-all duration-300 shadow-sm group-hover:shadow-md">
-                                    <span>Lihat Profil</span>
-                                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform duration-300"></i>
+                            <div class="mt-1 sm:mt-2">
+                                <span class="inline-flex items-center justify-center text-takaful-blue font-semibold text-xs sm:text-sm bg-takaful-lightBlue hover:bg-takaful-blue hover:text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg transition-all duration-300 shadow-sm group-hover:shadow-md w-full">
+                                    <span class="hidden sm:inline">Lihat Profil</span>
+                                    <span class="sm:hidden">Profil</span>
+                                    <i class="fas fa-arrow-right ml-1 sm:ml-2 group-hover:translate-x-1 transition-transform duration-300 text-xs"></i>
                                 </span>
                             </div>
                         </div>
