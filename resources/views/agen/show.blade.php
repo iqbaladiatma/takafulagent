@@ -484,22 +484,7 @@
                 </div>
             </div>
 
-            <!-- VISIT WEBSITE -->
-            <div class="bg-gradient-to-r from-takaful-blue to-takaful-darkBlue p-5 sm:p-6 md:p-8 rounded-xl md:rounded-2xl shadow-sm border border-gray-100">
-                <div class="text-center">
-                    <i class="fas fa-globe text-white text-3xl mb-4"></i>
-                    <h3 class="font-bold text-lg md:text-xl text-white mb-3">Website Takaful</h3>
-                    <p class="text-white/80 text-sm mb-4">
-                        Kunjungi website resmi Takaful untuk informasi produk lengkap
-                    </p>
-                    <a href="https://www.takaful.co.id" 
-                       target="_blank"
-                       class="inline-flex items-center bg-white text-takaful-blue font-semibold py-2.5 px-5 rounded-lg hover:bg-gray-50 transition-colors text-sm">
-                        <span>Kunjungi Website</span>
-                        <i class="fas fa-arrow-right ml-2"></i>
-                    </a>
-                </div>
-            </div>
+
         </div>
     </div>
 
